@@ -1,0 +1,246 @@
+/*
+ * Design tokens (Tailwind @theme). Same values as the former Bootstrap
+ * configuration (foundations/_variables.scss in storybook-base).
+ *
+ * A project overrides a token by redefining it in its own @theme block, after
+ * importing storybook-tw-base/stories/tailwind.css:
+ *
+ *   @theme {
+ *     --color-primary: #c00;
+ *     --contrast-primary: #fff;
+ *   }
+ *
+ * Tailwind's default palette, breakpoints, radii, shadows and font sizes are
+ * reset so that only the design system values exist.
+ */
+@theme {
+  /* Breakpoints (Bootstrap grid breakpoints). */
+  --breakpoint-*: initial;
+  --breakpoint-sm: 36rem; /* 576px */
+  --breakpoint-md: 48rem; /* 768px */
+  --breakpoint-lg: 62rem; /* 992px */
+  --breakpoint-xl: 75rem; /* 1200px */
+  --breakpoint-xxl: 87.5rem; /* 1400px */
+
+  /* Container max-widths, per breakpoint (see the container utility). */
+  --container-sm: 540px;
+  --container-md: 720px;
+  --container-lg: 960px;
+  --container-xl: 1140px;
+  --container-xxl: 1320px;
+
+  /* Colors. */
+  --color-*: initial;
+  --color-white: #fff;
+  --color-black: #000;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+
+  --color-gray-100: #f8f9fa;
+  --color-gray-200: #e9ecef;
+  --color-gray-300: #dee2e6;
+  --color-gray-400: #ced4da;
+  --color-gray-500: #adb5bd;
+  --color-gray-600: #6c757d;
+  --color-gray-700: #495057;
+  --color-gray-800: #343a40;
+  --color-gray-900: #212529;
+  --color-gray: var(--color-gray-600);
+  --color-gray-dark: var(--color-gray-800);
+
+  --color-blue: #0d6efd;
+  --color-indigo: #6610f2;
+  --color-purple: #6f42c1;
+  --color-pink: #d63384;
+  --color-red: #dc3545;
+  --color-orange: #fd7e14;
+  --color-yellow: #ffc107;
+  --color-green: #0dff8e;
+  --color-teal: #20c997;
+  /* "cyan" is the light tint of the info color, as in storybook-base. */
+  --color-cyan: rgb(82.196% 92.627% 94.98%);
+
+  --color-primary: var(--color-blue);
+  --color-secondary: var(--color-gray-600);
+  --color-success: var(--color-green);
+  --color-info: #1ca1bf;
+  --color-warning: var(--color-yellow);
+  --color-danger: var(--color-red);
+  --color-light: var(--color-gray-100);
+  --color-dark: var(--color-gray-900);
+
+  /* Subtle backgrounds, subtle borders and emphasized text, per theme color. */
+  --color-primary-subtle: rgb(81.02% 88.627% 99.843%);
+  --color-secondary-subtle: rgb(88.471% 89.176% 89.804%);
+  --color-success-subtle: rgb(81.02% 100% 91.137%);
+  --color-info-subtle: rgb(82.196% 92.627% 94.98%);
+  --color-warning-subtle: rgb(100% 95.137% 80.549%);
+  --color-danger-subtle: rgb(97.255% 84.157% 85.412%);
+  --color-light-subtle: rgb(98.627% 98.824% 99.02%);
+  --color-dark-subtle: #ced4da;
+
+  --color-primary-border-subtle: rgb(62.039% 77.255% 99.686%);
+  --color-secondary-border-subtle: rgb(76.941% 78.353% 79.608%);
+  --color-success-border-subtle: rgb(62.039% 100% 82.275%);
+  --color-info-border-subtle: rgb(64.392% 85.255% 89.961%);
+  --color-warning-border-subtle: rgb(100% 90.275% 61.098%);
+  --color-danger-border-subtle: rgb(94.51% 68.314% 70.824%);
+  --color-light-border-subtle: #e9ecef;
+  --color-dark-border-subtle: #adb5bd;
+
+  --color-primary-emphasis: rgb(2.039% 17.255% 39.686%);
+  --color-secondary-emphasis: rgb(16.941% 18.353% 19.608%);
+  --color-success-emphasis: rgb(2.039% 40% 22.275%);
+  --color-info-emphasis: rgb(4.392% 25.255% 29.961%);
+  --color-warning-emphasis: rgb(40% 30.275% 1.098%);
+  --color-danger-emphasis: rgb(34.51% 8.314% 10.824%);
+  --color-light-emphasis: #495057;
+  --color-dark-emphasis: #495057;
+
+  /* Body and UI colors. */
+  --color-body: #212529;
+  --color-body-bg: #fff;
+  --color-muted: rgb(33 37 41 / 0.75);
+  --color-tertiary: rgb(33 37 41 / 0.5);
+  --color-secondary-bg: #e9ecef;
+  --color-tertiary-bg: #f8f9fa;
+  --color-border: #dee2e6;
+  --color-border-translucent: rgb(0 0 0 / 0.175);
+  --color-link: var(--color-primary);
+  --color-link-hover: rgb(4.078% 34.51% 79.373%);
+  --color-code: #d63384;
+  --color-highlight-bg: rgb(100% 95.137% 80.549%);
+
+  /*
+   * Readable text color on each background color (Bootstrap's
+   * color-contrast()): text-bg-*, btn-*, badge… use them.
+   */
+  --contrast-primary: #fff;
+  --contrast-secondary: #fff;
+  --contrast-success: #000;
+  --contrast-info: #000;
+  --contrast-warning: #000;
+  --contrast-danger: #fff;
+  --contrast-light: #000;
+  --contrast-dark: #fff;
+  --contrast-blue: #fff;
+  --contrast-indigo: #fff;
+  --contrast-purple: #fff;
+  --contrast-pink: #fff;
+  --contrast-red: #fff;
+  --contrast-orange: #000;
+  --contrast-yellow: #000;
+  --contrast-green: #000;
+  --contrast-teal: #000;
+  --contrast-cyan: #000;
+  --contrast-black: #fff;
+  --contrast-white: #000;
+  --contrast-gray-100: #000;
+  --contrast-gray-200: #000;
+  --contrast-gray-300: #000;
+  --contrast-gray-400: #000;
+  --contrast-gray-500: #000;
+  --contrast-gray-600: #fff;
+  --contrast-gray: #fff;
+  --contrast-gray-700: #fff;
+  --contrast-gray-800: #fff;
+  --contrast-gray-dark: #fff;
+  --contrast-gray-900: #fff;
+
+  /*
+   * Button hover/active colors: shaded (0) or tinted (1). Defaults to 0, the
+   * colors with a dark contrast text are tinted, except light.
+   */
+  --btn-tint-success: 1;
+  --btn-tint-info: 1;
+  --btn-tint-warning: 1;
+  --btn-tint-dark: 1;
+  --btn-tint-orange: 1;
+  --btn-tint-yellow: 1;
+  --btn-tint-green: 1;
+  --btn-tint-teal: 1;
+  --btn-tint-cyan: 1;
+  --btn-tint-white: 1;
+  --btn-tint-gray-100: 1;
+  --btn-tint-gray-200: 1;
+  --btn-tint-gray-300: 1;
+  --btn-tint-gray-400: 1;
+  --btn-tint-gray-500: 1;
+
+  /* Typography. */
+  --font-sans:
+    OpenSans, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', 'Noto Sans', 'Liberation Sans', Arial,
+    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-mono: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+
+  --text-*: initial;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.25rem;
+  /* Headings sizes (responsive below the xl breakpoint, like Bootstrap RFS). */
+  --text-h1: min(calc(1.375rem + 1.5vw), 2.5rem);
+  --text-h1--line-height: 1.2;
+  --text-h2: min(calc(1.325rem + 0.9vw), 2rem);
+  --text-h2--line-height: 1.2;
+  --text-h3: min(calc(1.3rem + 0.6vw), 1.75rem);
+  --text-h3--line-height: 1.2;
+  --text-h4: min(calc(1.275rem + 0.3vw), 1.5rem);
+  --text-h4--line-height: 1.2;
+  --text-h5: 1.25rem;
+  --text-h5--line-height: 1.2;
+  --text-h6: 1rem;
+  --text-h6--line-height: 1.2;
+  /* Display headings. */
+  --text-display-1: min(calc(1.625rem + 4.5vw), 5rem);
+  --text-display-1--line-height: 1.2;
+  --text-display-1--font-weight: 300;
+  --text-display-2: min(calc(1.575rem + 3.9vw), 4.5rem);
+  --text-display-2--line-height: 1.2;
+  --text-display-2--font-weight: 300;
+  --text-display-3: min(calc(1.525rem + 3.3vw), 4rem);
+  --text-display-3--line-height: 1.2;
+  --text-display-3--font-weight: 300;
+  --text-display-4: min(calc(1.475rem + 2.7vw), 3.5rem);
+  --text-display-4--line-height: 1.2;
+  --text-display-4--font-weight: 300;
+  --text-display-5: min(calc(1.425rem + 2.1vw), 3rem);
+  --text-display-5--line-height: 1.2;
+  --text-display-5--font-weight: 300;
+  --text-display-6: min(calc(1.375rem + 1.5vw), 2.5rem);
+  --text-display-6--line-height: 1.2;
+  --text-display-6--font-weight: 300;
+
+  --leading-heading: 1.2;
+
+  /* Radii (rounded = Bootstrap rounded, rounded-sm/md/lg/xl/2xl = rounded-1/2/3/4/5). */
+  --radius-*: initial;
+  --radius: 0.375rem;
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 2rem;
+
+  /* Shadows (shadow-sm/shadow/shadow-lg = Bootstrap's). */
+  --shadow-*: initial;
+  --shadow: 0 0.5rem 1rem rgb(0 0 0 / 0.15);
+  --shadow-sm: 0 0.125rem 0.25rem rgb(0 0 0 / 0.075);
+  --shadow-lg: 0 1rem 3rem rgb(0 0 0 / 0.175);
+  --shadow-inset: inset 0 1px 2px rgb(0 0 0 / 0.075);
+
+  /* Focus ring (Bootstrap focus box-shadow). */
+  --focus-ring: 0 0 0 0.25rem rgb(13 110 253 / 0.25);
+
+  /* Animations. */
+  --animate-wave: wave 40s cubic-bezier(0.55, 0.5, 0.45, 0.5) infinite;
+
+  @keyframes wave {
+    0% {
+      transform: translate3d(-90px, 0, 0);
+    }
+    to {
+      transform: translate3d(85px, 0, 0);
+    }
+  }
+}

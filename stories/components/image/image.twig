@@ -1,0 +1,32 @@
+{% set thumbnail = thumbnail ? 'rounded border border-border bg-body-bg p-1' : '' %}
+{% set rounded = rounded ? 'rounded' : '' %}
+{% set shadow = shadow ? 'shadow' : '' %}
+
+{% set width = width|default('1920') %}
+{% set height = height|default('1080') %}
+
+{% set img %}
+<img
+  loading="lazy"
+  src="{{ src|e }}"
+  alt="{{ alt|e }}"
+  width="{{ width }}"
+  height="{{ height }}"
+  class="h-auto max-w-full{% if image_classes|length > 0 %} {{ image_classes|join(' ') }}{% endif %} {{ thumbnail }} {{ rounded }} {{ shadow }}"
+  {% for attribute, value in image_attributes %}
+    {{ attribute }}="{{ value|e }}"
+  {% endfor %}
+  >
+{% endset %}
+
+{# picture_srcsets: optional [{srcset, media}], renders a <picture> for art direction. #}
+{% if picture_srcsets|length > 0 %}
+  <picture>
+    {% for source in picture_srcsets %}
+      <source srcset="{{ source.srcset|e }}" media="{{ source.media|e }}">
+    {% endfor %}
+    {{ img }}
+  </picture>
+{% else %}
+  {{ img }}
+{% endif %}

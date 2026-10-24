@@ -1,0 +1,101 @@
+{% set drupal = drupal|default(false) %}
+
+{{ attach_library('storybook_tw_base/alert') }}
+
+{% set type = type|default('info') %}
+
+{% set hide_icon = hide_icon|default(false) %}
+
+{# Set icons array #}
+{% set icons = {
+  'warning': '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="me-2" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4m.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2"/></svg>',
+  'success': '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="me-2" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/></svg>',
+  'info': '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="me-2" viewBox="0 0 16 16"><path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2"/></svg>',
+} %}
+
+{# Set icons by types #}
+{% set types_icons = {
+  'primary' : 'info',
+  'secondary' : 'info',
+  'success' : 'success',
+  'warning' : 'warning',
+  'danger' : 'warning',
+  'info' : 'info',
+  'dark' : 'info',
+  'light' : 'info',
+} %}
+
+{# Colors by types #}
+{% set types_classes = {
+  'primary': 'bg-primary-subtle text-primary-emphasis border-primary-border-subtle',
+  'secondary': 'bg-secondary-subtle text-secondary-emphasis border-secondary-border-subtle',
+  'success': 'bg-success-subtle text-success-emphasis border-success-border-subtle',
+  'warning': 'bg-warning-subtle text-warning-emphasis border-warning-border-subtle',
+  'danger': 'bg-danger-subtle text-danger-emphasis border-danger-border-subtle',
+  'info': 'bg-info-subtle text-info-emphasis border-info-border-subtle',
+  'dark': 'bg-dark-subtle text-dark-emphasis border-dark-border-subtle',
+  'light': 'bg-light-subtle text-light-emphasis border-light-border-subtle',
+} %}
+
+{% set alert_classes = 'relative mb-4 flex rounded-md border p-4 [&_p:last-child]:mb-0' %}
+{% set dismissible_classes = 'pe-12 transition-opacity duration-150 ease-linear data-dismissed:opacity-0 motion-reduce:transition-none' %}
+{% set close_classes = 'btn-close absolute top-0 right-0 z-2 px-4 py-5' %}
+
+{% set icon_name = types_icons[type] %}
+
+{% if not drupal %}
+
+<div class="{{ alert_classes }} {{ types_classes[type] }}{{ dismissible ? ' ' ~ dismissible_classes }}"
+role="alert">
+  {% if hide_icon is empty %}
+    {{ icons[icon_name]|raw }}
+  {% endif %}
+
+  <div class="w-full">{{- text -}}</div>
+
+{% if dismissible %}
+    <button type="button" class="{{ close_classes }}" data-dismiss="alert" aria-label="Close"></button>
+{% endif %}
+</div>
+
+{% else %}
+
+  {% set dismissible = true %}
+
+  {% for type, messages in message_list %}
+
+    {% set type = type|default('info') %}
+
+    {% if type == 'status' %}
+      {% set type = 'success' %}
+    {% elseif type == 'error' %}
+      {% set type = 'danger' %}
+    {% endif %}
+    
+    {% set icon_name = types_icons[type] %}
+    
+    <div aria-label="{{ type }} message" class="{{ alert_classes }} {{ types_classes[type] }}{{ dismissible ? ' ' ~ dismissible_classes }}"
+    role="alert">
+
+      {% if hide_icon is empty %}
+        {{ icons[icon_name]|raw }}
+      {% endif %}
+
+      {% if messages|length > 1 %}
+        <ul class="mb-0 w-full list-none ps-0">
+          {% for message in messages %}
+          <li>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <div class="w-full">{{ messages|first }}</div>
+      {% endif %}
+
+      {% if dismissible %}
+        <button type="button" class="{{ close_classes }}" data-dismiss="alert" aria-label="Close"></button>
+      {% endif %}
+    </div>
+
+  {% endfor %}
+
+{% endif %}

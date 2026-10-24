@@ -1,0 +1,94 @@
+{#
+/**
+ * @file
+ * Form element wrapper — same contract as Drupal core form-element.html.twig.
+ *
+ * Drupal usage (templates/form/form-element.html.twig):
+ *   {% include "@components/form/form-element/form-element.twig" with {
+ *     type: type|clean_class,
+ *     name: name|clean_class,
+ *   } %}
+ *
+ * Available variables:
+ * - attributes: HTML attributes for the containing element.
+ * - errors: (optional) Any errors for this form element.
+ * - prefix: (optional) The form element prefix (rendered as an input-group).
+ * - suffix: (optional) The form element suffix (rendered as an input-group).
+ * - required: The required marker, or empty if not required.
+ * - type: The type of the element (textfield, checkbox, radio, select…),
+ *   already cleaned with |clean_class by the caller.
+ * - name: The name of the element, already cleaned with |clean_class by the
+ *   caller.
+ * - label: A rendered label element (see form-element-label.twig).
+ * - label_display: before | after | invisible | attribute.
+ * - description: (optional) Object with content and attributes.
+ * - description_display: before | after | invisible.
+ * - disabled: True if the element is disabled.
+ * - title_display: Title display setting.
+ * - children: The rendered element (see input.twig, select.twig…).
+ */
+#}
+{% set is_check = type in ['checkbox', 'radio'] %}
+{% set has_addon = not is_check and (prefix is not empty or suffix is not empty) %}
+{% set addon_classes = 'flex items-center whitespace-nowrap rounded-md border border-border bg-tertiary-bg px-3 py-1.5 text-center text-base font-normal leading-normal text-body' %}
+{%
+  set classes = [
+    'js-form-item',
+    'form-item',
+    'js-form-type-' ~ type,
+    'form-type-' ~ type,
+    'js-form-item-' ~ name,
+    'form-item-' ~ name,
+    title_display not in ['after', 'before'] ? 'form-no-label' : '',
+    disabled == 'disabled' ? 'form-disabled' : '',
+    errors ? 'form-item--error' : '',
+    is_check ? 'form-check [--form-check-mb:1rem]' : 'mb-4',
+  ]
+%}
+{%
+  set description_classes = [
+    'description',
+    'mt-1 text-[0.875em] text-muted',
+    description_display == 'invisible' ? 'sr-only' : '',
+  ]
+%}
+<div{{ attributes.addClass(classes) }}>
+  {% if label_display in ['before', 'invisible'] %}
+    {{ label }}
+  {% endif %}
+  {% if description_display == 'before' and description.content %}
+    <div{{ description.attributes.addClass(description_classes) }}>
+      {{ description.content }}
+    </div>
+  {% endif %}
+  {% if has_addon %}
+    <div class="relative flex w-full flex-wrap items-stretch [&>*:not(:first-child)]:-ms-px [&>*:not(:first-child)]:rounded-s-none [&>*:not(:last-child)]:rounded-e-none [&>.form-control]:relative [&>.form-control]:w-[1%] [&>.form-control]:min-w-0 [&>.form-control]:flex-auto [&>.form-control:focus]:z-5">
+  {% elseif prefix is not empty %}
+    <span class="field-prefix{{ is_check ? ' text-muted' }}">{{ prefix }}</span>
+  {% endif %}
+  {% if has_addon and prefix is not empty %}
+    <span class="{{ addon_classes }} field-prefix">{{ prefix }}</span>
+  {% endif %}
+  {{ children }}
+  {% if has_addon and suffix is not empty %}
+    <span class="{{ addon_classes }} field-suffix">{{ suffix }}</span>
+  {% elseif suffix is not empty %}
+    <span class="field-suffix{{ is_check ? ' text-muted' }}">{{ suffix }}</span>
+  {% endif %}
+  {% if has_addon %}
+    </div>
+  {% endif %}
+  {% if label_display == 'after' %}
+    {{ label }}
+  {% endif %}
+  {% if errors %}
+    <div class="form-item--error-message mt-1 block w-full text-[0.875em] text-danger">
+      {{ errors }}
+    </div>
+  {% endif %}
+  {% if description_display in ['after', 'invisible'] and description.content %}
+    <div{{ description.attributes.addClass(description_classes) }}>
+      {{ description.content }}
+    </div>
+  {% endif %}
+</div>

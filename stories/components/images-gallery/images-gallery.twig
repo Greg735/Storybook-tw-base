@@ -1,0 +1,48 @@
+{% set gallery_spacing = gallery_spacing|default(1) %}
+{% set gallery_grid = gallery_grid|default('w-1/2 sm:w-1/3 md:w-1/4') %}
+{% set use_lightbox = use_lightbox|default(false) %}
+{#
+ # Percentage widths in a wrapping flex row (not a CSS grid), so that Masonry
+ # (data-masonry) can position the items. Spacing 0 to 5, as the former
+ # Bootstrap gutters.
+ #}
+{% set gutters = [
+  { row: '', item: '' },
+  { row: '-mx-0.5 -mt-1', item: 'px-0.5 mt-1' },
+  { row: '-mx-1 -mt-2', item: 'px-1 mt-2' },
+  { row: '-mx-2 -mt-4', item: 'px-2 mt-4' },
+  { row: '-mx-3 -mt-6', item: 'px-3 mt-6' },
+  { row: '-mx-6 -mt-12', item: 'px-6 mt-12' },
+] %}
+{% set gutter = gutters[gallery_spacing]|default(gutters[1]) %}
+
+<div class="gallery-grid mb-4 flex flex-wrap {{ gutter.row }}{% if gallery_classes|length > 0 %} {{ gallery_classes|join(' ') }}{% endif %}"{% for attribute, value in gallery_attributes %} {{ attribute }}="{{ value|e }}"{% endfor %}>
+  {% for item in items %}
+  <div class="max-w-full shrink-0 {{ gutter.item }} {{ gallery_grid }}">
+  {% if use_lightbox %}
+    {% include "@components/image-lightbox/image-lightbox.twig" with {
+      alt: item.alt,
+      src: item.src,
+      width: item.width,
+      height: item.height,
+      image_classes: item.image_classes,
+      image_attributes: item.image_attributes,
+      picture_srcsets: item.picture_srcsets,
+      lightbox_dest_image_src: item.lightbox_dest_image_src,
+      lightbox_caption: item.lightbox_caption,
+      lightbox_gallery: item.lightbox_gallery,
+    } %}
+  {% else %}
+    {% include "@components/image/image.twig" with {
+      alt: item.alt,
+      src: item.src,
+      width: item.width,
+      height: item.height,
+      image_classes: item.image_classes,
+      image_attributes: item.image_attributes,
+      picture_srcsets: item.picture_srcsets,
+    } %}
+  {% endif %}  
+  </div>
+  {% endfor %}
+</div>

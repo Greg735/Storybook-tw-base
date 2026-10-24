@@ -1,0 +1,30 @@
+{# section-prefooter.twig #}
+<section class="relative bg-secondary bg-gradient p-12 text-white [&_h2]:text-[3em]">
+  <div class="container">
+  {% if heading %}
+    <div class="mb-4 flow-root">
+      {{ heading }}
+    </div>
+  {% endif %}
+    <div class="mb-12 -mx-3 flex flex-wrap *:max-w-full *:shrink-0 *:px-3">
+      {{ content }}
+    </div>
+  </div>
+
+  <div class="absolute start-0 bottom-0 w-full overflow-hidden">
+    <svg class="waves relative -mb-[7px] h-[14vh] max-h-[80px] min-h-[80px] w-full max-md:max-h-[60px] max-md:min-h-[60px]" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 40" preserveAspectRatio="none" shape-rendering="auto">
+      <defs>
+        <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"></path>
+      </defs>
+      <g class="moving-waves">
+        <use xlink:href="#gentle-wave" x="48" y="-1" fill="rgba(251,251,251,0.30"></use>
+        <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(251,251,251,0.25)"></use>
+        <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(251,251,251,0.15)"></use>
+        <use xlink:href="#gentle-wave" x="48" y="8" fill="rgba(251,251,251,0.10)"></use>
+        <use xlink:href="#gentle-wave" x="48" y="13" fill="rgba(251,251,251,0.05)"></use>
+        <use xlink:href="#gentle-wave" x="48" y="16" fill="rgba(255,255,255,1)"></use>
+      </g>
+    </svg>
+  </div>
+
+</section>

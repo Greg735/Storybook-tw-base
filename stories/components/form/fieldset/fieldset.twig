@@ -1,0 +1,67 @@
+{#
+/**
+ * @file
+ * Fieldset — same contract as Drupal core fieldset.html.twig.
+ *
+ * Drupal also uses it to wrap radios and checkboxes groups: they get the
+ * "fieldgroup form-composite" classes, whose legend is styled like a label.
+ *
+ * Drupal usage (templates/form/fieldset.html.twig):
+ *   {% include "@components/form/fieldset/fieldset.twig" %}
+ *
+ * Available variables:
+ * - attributes: HTML attributes for the fieldset element.
+ * - errors: (optional) Any errors for this fieldset element.
+ * - required: Boolean indicating whether the fieldset element is required.
+ * - legend: Object with title and attributes.
+ * - legend_span: Object with attributes.
+ * - description: Object with content and attributes.
+ * - children: The rendered child elements of the fieldset.
+ * - prefix: The content to add before the fieldset children.
+ * - suffix: The content to add after the fieldset children.
+ */
+#}
+{# Radios / checkboxes groups: the legend is the field label. Other fieldsets are framed. #}
+{% set composite = attributes.hasClass('form-composite') %}
+{%
+  set classes = [
+    'js-form-item',
+    'form-item',
+    'js-form-wrapper',
+    'form-wrapper',
+    'mb-4',
+    composite ? '' : 'rounded-md border border-border p-4',
+  ]
+%}
+{%
+  set legend_span_classes = [
+    'fieldset-legend',
+    required ? 'js-form-required' : '',
+    required ? 'form-required' : '',
+    required ? "after:ms-1 after:text-danger after:content-['*']" : '',
+  ]
+%}
+{% set legend_classes = composite ? 'float-none mb-2 text-base font-normal' : 'float-none mb-0 w-auto px-2 text-lg font-bold' %}
+<fieldset{{ attributes.addClass(classes) }}>
+  {# Always wrap fieldset legends in a <span> for CSS positioning. #}
+  <legend{{ legend.attributes.addClass(legend_classes) }}>
+    <span{{ legend_span.attributes.addClass(legend_span_classes) }}>{{ legend.title }}</span>
+  </legend>
+  <div class="fieldset-wrapper">
+    {% if prefix %}
+      <span class="field-prefix">{{ prefix }}</span>
+    {% endif %}
+    {{ children }}
+    {% if suffix %}
+      <span class="field-suffix">{{ suffix }}</span>
+    {% endif %}
+    {% if errors %}
+      <div class="form-item--error-message mt-1 block w-full text-[0.875em] text-danger">
+        {{ errors }}
+      </div>
+    {% endif %}
+    {% if description.content %}
+      <div{{ description.attributes.addClass('description', 'mt-1 text-[0.875em] text-muted') }}>{{ description.content }}</div>
+    {% endif %}
+  </div>
+</fieldset>

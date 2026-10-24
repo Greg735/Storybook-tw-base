@@ -1,0 +1,58 @@
+# https://docs.github.com/code-security/dependabot/working-with-dependabot/dependabot-options-reference
+version: 2
+
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: daily
+      time: '06:00'
+      timezone: Europe/Zurich
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: deps
+    groups:
+      # Storybook packages are released together and must stay on the same version.
+      storybook:
+        patterns:
+          - storybook
+          - '@storybook/*'
+          - '@chromatic-com/storybook'
+      # Tailwind packages are released together too.
+      tailwind:
+        patterns:
+          - tailwindcss
+          - '@tailwindcss/*'
+          - eslint-plugin-storybook
+      # Vitest and its browser provider must match; Playwright drives the browser.
+      vitest:
+        patterns:
+          - vitest
+          - '@vitest/*'
+          - playwright
+      eslint:
+        patterns:
+          - eslint
+          - '@eslint/*'
+          - eslint-config-prettier
+          - globals
+      # Everything else: one PR for minor and patch updates, majors stay separate.
+      minor-and-patch:
+        update-types:
+          - minor
+          - patch
+
+  # Versions of the actions used in .github/workflows/.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: '06:00'
+      timezone: Europe/Zurich
+    commit-message:
+      prefix: ci
+    groups:
+      github-actions:
+        patterns:
+          - '*'

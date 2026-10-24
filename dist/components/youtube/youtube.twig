@@ -1,0 +1,11 @@
+<div class="relative mb-4 aspect-video w-full{% if classes|length > 0 %} {{ classes|join(' ') }}{% endif %}"
+  {% for attribute, value in youtube_attributes %}
+    {{ attribute }}="{{ value|e }}"
+  {% endfor %}
+>
+  <iframe class="absolute inset-0 size-full" 
+          src="https://www.youtube.com/embed/{{ video_id }}?rel=0" 
+          title="{{ title|default('YouTube video player') }}" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+          allowfullscreen></iframe>
+</div>

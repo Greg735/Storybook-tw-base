@@ -1,0 +1,22 @@
+{% if breadcrumb %}
+  <nav aria-label="breadcrumb"{% for attribute, value in breadcrumb_attributes %} {{ attribute }}="{{ value|e }}"{% endfor %}>
+    <h2 id="system-breadcrumb" class="sr-only">{{ breadcrumb_title|default('Breadcrumb') }}</h2>
+    <ol class="mb-4 flex list-none flex-wrap p-0">
+    {% for item in breadcrumb %}
+      <li class="not-first:ps-2 not-first:before:float-left not-first:before:pe-2 not-first:before:text-muted not-first:before:content-['/']">
+        {% if loop.first and icon_name %}
+          {% include "@components/icon/icon.twig" with {
+              icon_name: icon_name,
+              size: 'medium'
+          } %}  
+        {% endif %}
+        {% if item.url %}
+          <a href="{{ item.url }}">{{ item.text }}</a>
+        {% else %}
+          {{ item.text }}
+        {% endif %}
+      </li>
+    {% endfor %}
+    </ol>
+  </nav>
+{% endif %}

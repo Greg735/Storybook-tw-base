@@ -1,0 +1,1 @@
+<div class="text-display-{{ display_heading_level }}{% if display_heading_classes|length > 0 %} {{ display_heading_classes|join(' ') }}{% endif %}"{% for attribute, value in display_heading_attributes %} {{ attribute }}="{{ value|e }}"{% endfor %}>{{ text }}</div>

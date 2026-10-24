@@ -1,0 +1,104 @@
+{% set size = (size == "default") ? 'md' : size %}
+
+{% set first_title = first_title|default('Go to first page') %}
+{% set first_page_short_title = first_page_short_title|default('« First') %}
+{% set first_page_long_title = first_page_long_title|default('First page') %}
+
+{% set previous_title = previous_title|default('Go to previous page') %}
+{% set previous_page_short_title = previous_page_short_title|default('‹ Previous') %}
+{% set previous_page_long_title = previous_page_long_title|default('Previous page') %}
+
+{% set next_title = next_title|default('Go to next page') %}
+{% set next_page_long_title = next_page_long_title|default('Next page') %}
+{% set next_page_short_title = next_page_short_title|default('Next ›') %}
+
+{% set last_title = last_title|default('Go to last page') %}
+{% set last_page_long_title = last_page_long_title|default('Last page') %}
+{% set last_page_short_title = last_page_short_title|default('Last »') %}
+
+{% set go_to_page_title = go_to_page_title|default('Go to page') %}
+{% set current_page_title = current_page_title|default('Current page') %}
+{% set page_title = page_title|default('Page') %}
+
+{% set sizes = {
+  'sm': { link: 'px-2 py-1 text-sm', item: 'first:*:rounded-s-sm last:*:rounded-e-sm' },
+  'md': { link: 'px-3 py-1.5 text-base', item: 'first:*:rounded-s-md last:*:rounded-e-md' },
+  'lg': { link: 'px-6 py-3 text-lg', item: 'first:*:rounded-s-lg last:*:rounded-e-lg' },
+} %}
+{% set size = sizes[size] ? size : 'md' %}
+{% set item_classes = 'not-first:*:-ms-px ' ~ sizes[size].item %}
+{% set link_classes = 'relative block border no-underline transition-[color,background-color,border-color,box-shadow] duration-150 ease-in-out motion-reduce:transition-none ' ~ sizes[size].link %}
+{% set link_default = link_classes ~ ' border-border bg-body-bg text-link hover:z-2 hover:bg-tertiary-bg hover:text-link-hover focus:z-3 focus:bg-secondary-bg focus:text-link-hover focus:shadow-[var(--focus-ring)] focus:outline-0' %}
+{% set link_active = link_classes ~ ' z-3 border-primary bg-primary text-white' %}
+{% set link_disabled = link_classes ~ ' pointer-events-none border-border bg-secondary-bg text-muted' %}
+
+
+<nav class="pager" aria-labelledby="{{ heading_id }}" aria-label="{{ pagination_title }}">
+  <h4 id="{{ heading_id }}" class="sr-only">{{ pagination_title }}</h4>
+  <ul class="flex list-none ps-0{% if pagination_classes|length > 0 %} {{ pagination_classes|join(' ') }}{% endif %} js-pager__items">
+    {# Print first item if we are not on the first page. #}
+    {% if items.first %}
+      <li class="pager__item--first {{ item_classes }}">
+        <a href="{{ items.first.href }}" title="{{ first_title }}" class="{{ link_default }}">
+          <span class="sr-only">{{ first_page_long_title }}</span>
+          <span aria-hidden="true">{{ items.first.text|default(first_page_short_title)}}</span>
+        </a>
+      </li>
+    {% endif %}
+    {# Print previous item if we are not on the first page. #}
+    {% if items.previous %}
+      <li class="pager__item--previous {{ item_classes }}">
+        <a href="{{ items.previous.href }}" title="{{ previous_title }}" rel="prev" class="{{ link_default }}">
+          <span class="sr-only">{{ previous_page_long_title }}</span>
+          <span aria-hidden="true">{{ items.previous.text|default(previous_page_short_title) }}</span>
+        </a>
+      </li>
+    {% endif %}
+    {# Add an ellipsis if there are further previous pages. #}
+    {% if ellipses.previous %}
+      <li class="{{ item_classes }}">
+        <span class="{{ link_disabled }}">&hellip;</span>
+      </li>
+    {% endif %}
+    {# Now generate the actual pager piece. #}
+    {% for key, item in items.pages %}
+      <li class="{{ item_classes }}{{ current == key ? ' is-active' : '' }}"{{ current == key ? ' aria-current="page"' : '' }}>
+        {% if current == key %}
+          {% set title = current_page_title %}
+        {% else %}
+          {% set title = go_to_page_title ~' '~ key %}
+        {% endif %}
+        <a href="{{ item.href }}" title="{{ title }}" class="{{ current == key ? link_active : link_default }}">
+          <span class="sr-only">
+            {{ current == key ? current_page_title : page_title }}
+          </span>
+          {{- key -}}
+        </a>
+      </li>
+    {% endfor %}
+    {# Add an ellipsis if there are further next pages. #}
+    {% if ellipses.next %}
+      <li class="{{ item_classes }}">
+        <span class="{{ link_disabled }}">&hellip;</span>
+      </li>
+    {% endif %}
+    {# Print next item if we are not on the last page. #}
+    {% if items.next %}
+      <li class="pager__item--next {{ item_classes }}">
+        <a href="{{ items.next.href }}" title="{{ next_title }}" rel="next" class="{{ link_default }}">
+          <span class="sr-only">{{ next_page_long_title }}</span>
+          <span aria-hidden="true">{{ items.next.text|default(next_page_short_title) }}</span>
+        </a>
+      </li>
+    {% endif %}
+    {# Print last item if we are not on the last page. #}
+    {% if items.last %}
+      <li class="pager__item--last {{ item_classes }}">
+        <a href="{{ items.last.href }}" title="{{ last_title }}" class="{{ link_default }}">
+          <span class="sr-only">{{ last_page_long_title }}</span>
+          <span aria-hidden="true">{{ items.last.text|default(last_page_short_title) }}</span>
+        </a>
+      </li>
+    {% endif %}
+  </ul>
+</nav>

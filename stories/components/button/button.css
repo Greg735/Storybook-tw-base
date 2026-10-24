@@ -1,0 +1,105 @@
+/*
+ * Buttons: `btn` + a color (`btn-<color>` or `btn-outline-<color>`, any theme
+ * color) + an optional size (`btn-sm`, `btn-lg`). Hover, focus and active
+ * colors are derived from the color like Bootstrap's: shaded, or tinted for
+ * the colors listed in --btn-tint-* (theme.css).
+ */
+
+/* Colors passed as Twig variables (button and link components). */
+@source inline('btn-{primary,secondary,success,info,warning,danger,light,dark,blue,indigo,purple,pink,red,orange,yellow,green,teal,cyan,black,white,gray,gray-100,gray-200,gray-300,gray-400,gray-500,gray-600,gray-700,gray-800,gray-900,gray-dark}');
+@source inline('btn-outline-{primary,secondary,success,info,warning,danger,light,dark,blue,indigo,purple,pink,red,orange,yellow,green,teal,cyan,black,white,gray,gray-100,gray-200,gray-300,gray-400,gray-500,gray-600,gray-700,gray-800,gray-900,gray-dark}');
+
+@utility btn {
+  display: inline-block;
+  padding: var(--btn-padding-y, 0.375rem) var(--btn-padding-x, 0.75rem);
+  font-size: var(--btn-font-size, 1rem);
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--btn-color, var(--color-body));
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  cursor: pointer;
+  user-select: none;
+  border: 1px solid var(--btn-border-color, transparent);
+  border-radius: var(--btn-radius, var(--radius-md));
+  background-color: var(--btn-bg, transparent);
+  transition:
+    color 0.15s ease-in-out,
+    background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+  &:hover {
+    color: var(--btn-hover-color, var(--btn-color, var(--color-body)));
+    background-color: var(--btn-hover-bg, var(--btn-bg, transparent));
+    border-color: var(--btn-hover-border-color, var(--btn-border-color, transparent));
+  }
+  &:focus-visible {
+    color: var(--btn-hover-color, var(--btn-color, var(--color-body)));
+    background-color: var(--btn-hover-bg, var(--btn-bg, transparent));
+    border-color: var(--btn-hover-border-color, var(--btn-border-color, transparent));
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem var(--btn-focus-shadow, rgb(13 110 253 / 0.5));
+  }
+  &:active,
+  &.active {
+    color: var(--btn-active-color, var(--btn-color, var(--color-body)));
+    background-color: var(--btn-active-bg, var(--btn-bg, transparent));
+    border-color: var(--btn-active-border-color, var(--btn-border-color, transparent));
+  }
+  &:disabled,
+  &[aria-disabled='true'],
+  fieldset:disabled & {
+    color: var(--btn-color, var(--color-body));
+    pointer-events: none;
+    background-color: var(--btn-disabled-bg, var(--btn-bg, transparent));
+    border-color: var(--btn-border-color, transparent);
+    opacity: 0.65;
+  }
+}
+
+@utility btn-* {
+  --btn-tint: --value(--btn-tint-*);
+  --btn-color: --value(--contrast-*);
+  --btn-bg: --value(--color-*);
+  --btn-border-color: --value(--color-*);
+  --btn-mix: rgb(calc(var(--btn-tint, 0) * 255) calc(var(--btn-tint, 0) * 255) calc(var(--btn-tint, 0) * 255));
+  --btn-hover-color: var(--btn-color);
+  --btn-hover-bg: color-mix(in srgb, var(--btn-bg), var(--btn-mix) 15%);
+  --btn-hover-border-color: color-mix(in srgb, var(--btn-bg), var(--btn-mix) calc(20% - 10% * var(--btn-tint, 0)));
+  --btn-active-color: var(--btn-color);
+  --btn-active-bg: color-mix(in srgb, var(--btn-bg), var(--btn-mix) 20%);
+  --btn-active-border-color: color-mix(in srgb, var(--btn-bg), var(--btn-mix) calc(25% - 15% * var(--btn-tint, 0)));
+  --btn-focus-shadow: color-mix(in srgb, color-mix(in srgb, var(--btn-color) 15%, var(--btn-bg)) 50%, transparent);
+}
+
+@utility btn-outline-* {
+  --btn-color: --value(--color-*);
+  --btn-bg: transparent;
+  --btn-border-color: --value(--color-*);
+  --btn-hover-color: --value(--contrast-*);
+  --btn-hover-bg: --value(--color-*);
+  --btn-hover-border-color: --value(--color-*);
+  --btn-active-color: --value(--contrast-*);
+  --btn-active-bg: --value(--color-*);
+  --btn-active-border-color: --value(--color-*);
+  --btn-focus-shadow: color-mix(in srgb, --value(--color-*) 50%, transparent);
+}
+
+@utility btn-sm {
+  --btn-padding-y: 0.25rem;
+  --btn-padding-x: 0.5rem;
+  --btn-font-size: 0.875rem;
+  --btn-radius: var(--radius-sm);
+}
+
+@utility btn-lg {
+  --btn-padding-y: 0.5rem;
+  --btn-padding-x: 1rem;
+  --btn-font-size: 1.25rem;
+  --btn-radius: var(--radius-lg);
+}

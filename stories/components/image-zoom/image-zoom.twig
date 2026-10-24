@@ -1,0 +1,8 @@
+<div class="{% if classes|length > 0 %} {{ classes|join(' ') }}{% endif %} relative overflow-hidden [&_img]:transition-all [&_img]:duration-600 [&_img]:ease-in-out [&_img:hover]:scale-110"{% for attribute, value in image_zoom_attributes %} {{ attribute }}="{{ value|e }}"{% endfor %}>
+  {% include "@components/image/image.twig" with {
+    src: src,
+    alt: alt,
+    width: width,
+    height: height,
+  } %}
+</div>

@@ -1,0 +1,9 @@
+{{ attach_library('storybook_tw_base/map') }}
+
+{% set zoom = zoom|default(13) %}
+{% set z_index = map_z_index|default(1)%}
+
+<div id="{{ "map-" ~ random() }}" data-map-id="map" data-long="{{ long }}" data-lat="{{ lat }}" data-zoom="{{ zoom }}"
+  data-marker-descr="{{ marker_text }}" data-marker-open="{{ popup_open }}" class="mb-4 h-full min-h-[210px]{% if classes|length > 0 %} {{ classes|join(' ') }}{% endif %}" style="{% if height != '' %}height:{{ height }}px;{% endif %} z-index:{{ z_index }}"
+  {% for attribute, value in map_attributes %} {{ attribute }}="{{ value|e }}"{% endfor %}>
+</div>

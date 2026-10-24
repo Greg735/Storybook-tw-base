@@ -1,0 +1,18 @@
+{# section.twig #}
+
+{% set background_image = background_image ? ' style="background-image:url(\'' ~ background_image ~'\')" ' : null %}
+
+<section class="{% if classes|length > 0 %} {{ classes|join(' ') }}{% endif %}" {{ background_image }}{% for attribute, value in section_attributes %} {{ attribute }}="{{ value|e }}"{% endfor %}>
+
+  <div class="container">
+  {% if heading %}
+    <div class="mb-4 flow-root">
+      {{ heading }}
+    </div>
+  {% endif %}
+    <div class="-mx-3 flex flex-wrap *:max-w-full *:shrink-0 *:px-3">
+      {{ content }}
+    </div>
+  </div>
+
+</section>

@@ -1,0 +1,3 @@
+<span class="badge text-bg-{{ type|default('primary') }}{% if badge_classes|length > 0 %} {{ badge_classes|join(' ') }}{% endif %}{% if pill %} rounded-full{% endif %}">
+  {{- label -}}
+</span>

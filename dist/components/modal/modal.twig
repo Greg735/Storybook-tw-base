@@ -1,0 +1,39 @@
+{#
+ # Modal (native <dialog>), full screen below the md breakpoint.
+ #
+ # Open it with a button: <button type="button" data-modal-target="#<modal_id>">.
+ # Elements with data-modal-close, the Escape key and a click on the backdrop
+ # close it.
+ #
+ # Variables:
+ # - modal_id: unique id.
+ # - modal_size: '' (500px), 'modal-sm' (300px), 'modal-lg' (800px) or
+ #   'modal-xl' (1140px).
+ # - modal_close_button_label: text next to the close button.
+ # - content: the modal content.
+ # - modal_classes: additional classes.
+ #}
+{{ attach_library('storybook_tw_base/modal') }}
+
+{% set modal_size = modal_size|default("") %}
+{% set modal_classes = modal_classes|default([]) %}
+{% set modal_id = modal_id|default('modalExemple') %}
+{% set modal_close_button_label = modal_close_button_label|default("") %}
+
+{% set sizes = {
+  'default': 'md:max-w-[500px]',
+  'modal-sm': 'md:max-w-[300px]',
+  'modal-lg': 'md:max-w-[500px] lg:max-w-[800px]',
+  'modal-xl': 'md:max-w-[500px] lg:max-w-[800px] xl:max-w-[1140px]',
+} %}
+
+<dialog class="group/modal fixed inset-0 m-0 size-full max-h-none max-w-none overflow-x-hidden overflow-y-auto bg-transparent p-0 opacity-0 transition-opacity duration-150 ease-linear backdrop:bg-black/0 backdrop:transition-colors backdrop:duration-150 backdrop:ease-linear data-visible:opacity-100 data-visible:backdrop:bg-black/50 motion-reduce:transition-none{% if modal_classes|length > 0 %} {{ modal_classes|join(' ') }}{% endif %}" id="{{ modal_id }}" aria-labelledby="{{ modal_id }}Label" data-modal>
+  <div class="pointer-events-none relative flex h-full w-full -translate-y-[50px] items-center transition-transform duration-300 ease-out group-data-visible/modal:translate-y-0 md:mx-auto md:my-7 md:h-auto md:min-h-[calc(100%-3.5rem)] md:w-auto {{ sizes[modal_size]|default(sizes['default']) }} motion-reduce:transition-none">
+    <div class="pointer-events-auto relative flex h-full w-full flex-col bg-body-bg bg-clip-padding text-body shadow outline-0 md:h-auto md:rounded-lg md:border md:border-border-translucent" data-modal-content>
+      <div class="relative flex-auto p-4">
+        <button type="button" class="btn-close absolute top-0 right-4 flex h-auto w-auto translate-y-[10px] bg-right bg-size-[0.7rem] pr-[1.3rem] text-left text-[0.9rem] md:right-0 md:-translate-y-[35px]" data-modal-close aria-label="Close">{{ modal_close_button_label }}</button>
+        {{ content }}
+      </div>
+    </div>
+  </div>
+</dialog>

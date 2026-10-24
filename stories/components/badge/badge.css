@@ -1,0 +1,23 @@
+/*
+ * Badge: `badge` + a color (`text-bg-<color>`, any theme color), optionally
+ * `rounded-full` for a pill.
+ */
+
+/* Colors passed as Twig variables. */
+@source inline('text-bg-{primary,secondary,success,info,warning,danger,light,dark,blue,indigo,purple,pink,red,orange,yellow,green,teal,cyan,black,white,gray,gray-100,gray-200,gray-300,gray-400,gray-500,gray-600,gray-700,gray-800,gray-900,gray-dark}');
+
+@utility badge {
+  display: inline-block;
+  padding: 0.35em 0.65em;
+  font-size: 0.75em;
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: var(--radius-md);
+  &:empty {
+    display: none;
+  }
+}

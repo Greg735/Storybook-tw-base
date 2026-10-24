@@ -1,0 +1,29 @@
+{#
+ # Accordion.
+ #
+ # Variables:
+ # - accordion_id: unique id, prefix of the panel ids.
+ # - items: [{title, content, open}].
+ # - independent: items open independently (by default, opening one closes
+ #   the others).
+ #}
+{{ attach_library('storybook_tw_base/accordion') }}
+
+<div id="{{ accordion_id }}" data-accordion{% if not independent %} data-accordion-exclusive{% endif %}>
+  {% for item in items %}
+    {% set panel_id = 'collapse' ~ accordion_id ~ loop.index %}
+    <div class="group/item border border-border bg-body-bg text-body not-first:border-t-0 first:rounded-t-md last:rounded-b-md">
+      <h2 class="mb-0">
+        <button class="group/button relative z-0 flex w-full items-center border-0 bg-body-bg px-5 py-4 text-left text-base text-body [overflow-anchor:none] transition-[color,background-color,border-color,box-shadow,border-radius] duration-150 ease-in-out group-first/item:rounded-t-[calc(var(--radius-md)-1px)] group-last/item:aria-[expanded=false]:rounded-b-[calc(var(--radius-md)-1px)] hover:z-2 focus:z-3 focus:shadow-[var(--focus-ring)] focus:outline-0 aria-expanded:bg-primary-subtle aria-expanded:text-primary-emphasis aria-expanded:not-focus:shadow-[inset_0_-1px_0_var(--color-border)] motion-reduce:transition-none" type="button" data-accordion-trigger aria-expanded="{{ item.open ? 'true' : 'false' }}" aria-controls="{{ panel_id }}">
+          {{ item.title }}
+          <svg class="ms-auto size-5 shrink-0 transition-transform duration-200 ease-in-out group-aria-expanded/button:-rotate-180 motion-reduce:transition-none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m2 5 6 6 6-6"/></svg>
+        </button>
+      </h2>
+      <div id="{{ panel_id }}" class="{{ item.open ? '' : 'hidden' }}" data-accordion-panel>
+        <div class="px-5 py-4">
+          {{ item.content }}
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>

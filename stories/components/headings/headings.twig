@@ -1,0 +1,1 @@
+<h{{ heading_level }} {% if heading_classes|length > 0 %}class="{{ heading_classes|join(' ') }}"{% endif %}{% for attribute, value in heading_attributes %} {{ attribute }}="{{ value|e }}"{% endfor %}>{{ text }}</h{{ heading_level }}>

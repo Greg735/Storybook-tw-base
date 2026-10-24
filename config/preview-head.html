@@ -1,0 +1,49 @@
+<link rel="stylesheet" href="/css/style.css" />
+<script>
+  // Minimal stand-in for Drupal's core/drupal and core/once libraries, so the
+  // *.behaviors.js bundled in sb-main.js run the same way as in Drupal.
+  window.Drupal = window.Drupal || { behaviors: {} };
+  Drupal.attachBehaviors =
+    Drupal.attachBehaviors ||
+    function (context, settings) {
+      context = context || document;
+      Object.keys(Drupal.behaviors).forEach(function (name) {
+        var behavior = Drupal.behaviors[name];
+        if (typeof behavior.attach === 'function') {
+          try {
+            behavior.attach(context, settings || {});
+          } catch (error) {
+            console.error('Drupal.behaviors.' + name + ':', error);
+          }
+        }
+      });
+    };
+
+  // Same contract as @drupal/once: returns the elements not yet processed for
+  // this id and marks them with a data-once attribute.
+  window.once =
+    window.once ||
+    function (id, selector, context) {
+      var elements =
+        typeof selector === 'string'
+          ? (context || document).querySelectorAll(selector)
+          : selector instanceof Element
+            ? [selector]
+            : selector;
+      return [].filter.call(elements, function (element) {
+        var ids = (element.getAttribute('data-once') || '').split(' ').filter(Boolean);
+        if (ids.indexOf(id) !== -1) {
+          return false;
+        }
+        ids.push(id);
+        element.setAttribute('data-once', ids.join(' '));
+        return true;
+      });
+    };
+
+  // Storybook re-dispatches DOMContentLoaded after rendering each story.
+  document.addEventListener('DOMContentLoaded', function () {
+    Drupal.attachBehaviors(document);
+  });
+</script>
+<script src="/js/sb-main.js"></script>

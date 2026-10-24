@@ -1,0 +1,91 @@
+{# Links are relative to iframe.html: "./?path=…" opens the page in the
+   Storybook UI (index.html, in the same directory), not the bare preview. #}
+<div>
+  <header class="border-b border-border bg-light bg-[radial-gradient(circle_at_85%_20%,color-mix(in_srgb,var(--color-primary)_18%,transparent),transparent_45%),radial-gradient(circle_at_10%_90%,color-mix(in_srgb,var(--color-info)_14%,transparent),transparent_40%)] py-12">
+    <div class="container lg:py-6">
+      <p class="mb-4 text-xs font-semibold tracking-[.12em] text-primary uppercase">Design system · Tailwind CSS 4 · Twig</p>
+      <h1 class="mb-4 text-display-4 font-bold">Component library</h1>
+      <p class="mb-6 text-lg font-light text-muted lg:w-2/3">
+        Explore, test and document every UI building block of the project in isolation.
+        Each component is written in Twig, styled with Tailwind CSS,
+        and ready to be dropped into Drupal.
+      </p>
+      <div class="mb-12 flex flex-wrap gap-2">
+        <a class="btn btn-primary btn-lg" href="./?path=/docs/components-button-button--docs" target="_top">
+          Browse components <i class="bi bi-arrow-right ms-1" aria-hidden="true"></i>
+        </a>
+        <a class="btn btn-outline-secondary btn-lg" href="./?path=/docs/foundations-typography--docs" target="_top">
+          Foundations
+        </a>
+      </div>
+      <dl class="-mx-3 -mt-6 mb-0 flex flex-wrap *:mt-6 *:max-w-full *:shrink-0 *:px-3">
+        {% for stat in stats %}
+          <div class="w-1/2 md:w-1/4">
+            <dt class="text-[0.875em] font-normal text-muted">{{ stat.label }}</dt>
+            <dd class="mb-0 text-display-6 font-semibold tabular-nums">{{ stat.value }}</dd>
+          </div>
+        {% endfor %}
+      </dl>
+    </div>
+  </header>
+
+  <section class="container py-12">
+    <h2 class="mb-6 text-h3 font-bold">What's inside</h2>
+    <div class="-mx-3 -mt-6 flex flex-wrap *:mt-6 *:max-w-full *:shrink-0 *:px-3">
+      {% for section in sections %}
+        <div class="w-full md:w-1/2 xl:w-1/4">
+          <a class="relative flex h-full min-w-0 flex-col rounded-md border border-border bg-body-bg text-body no-underline transition-[transform,box-shadow,border-color] duration-200 ease-[ease] hover:-translate-y-[3px] hover:border-primary hover:shadow-[0_.75rem_1.5rem_rgb(0_0_0/.08)]" href="./?path=/docs/{{ section.id }}--docs" target="_top">
+            <div class="flex-auto p-6">
+              <span class="mb-4 inline-flex size-12 items-center justify-center rounded-lg bg-primary/10 text-[1.4rem] text-primary">
+                <i class="bi bi-{{ section.icon }}" aria-hidden="true"></i>
+              </span>
+              <h3 class="text-h5 font-semibold">{{ section.title }}</h3>
+              <p class="mb-0 text-muted">{{ section.text }}</p>
+            </div>
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="border-y border-border bg-tertiary-bg">
+    <div class="container py-12">
+      <div class="-mx-6 -mt-12 flex flex-wrap *:mt-12 *:max-w-full *:shrink-0 *:px-6">
+        <div class="w-full lg:w-1/2">
+          <h2 class="mb-6 text-h3 font-bold">Getting started</h2>
+          <ol class="mb-0 list-none ps-0">
+            {% for step in steps %}
+              <li class="flex gap-4 {{ not loop.last ? 'mb-6' }}">
+                <span class="inline-flex size-8 shrink-0 items-center justify-center rounded-full bg-primary text-[0.9rem] font-semibold text-white">{{ loop.index }}</span>
+                <div class="min-w-0 grow">
+                  <p class="mb-2 font-semibold">{{ step.title }}</p>
+                  <pre class="mb-0 rounded-lg bg-dark px-4 py-2 text-[0.875em] text-light"><code>{{ step.command }}</code></pre>
+                </div>
+              </li>
+            {% endfor %}
+          </ol>
+        </div>
+        <div class="w-full lg:w-1/2">
+          <h2 class="mb-6 text-h3 font-bold">How it works</h2>
+          <ul class="mb-0 list-none ps-0">
+            {% for item in workflow %}
+              <li class="flex gap-4 {{ not loop.last ? 'mb-6' }}">
+                <i class="bi bi-{{ item.icon }} text-[length:var(--text-h4)] text-primary" aria-hidden="true"></i>
+                <div>
+                  <p class="mb-1 font-semibold">{{ item.title }}</p>
+                  <p class="mb-0 text-muted">{{ item.text|raw }}</p>
+                </div>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="container py-6">
+    <p class="mb-0 text-[0.875em] text-muted">
+      Built with Storybook 10, Tailwind CSS 4, Twig, Vite and Vitest.
+    </p>
+  </footer>
+</div>

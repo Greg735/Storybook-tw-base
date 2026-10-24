@@ -1,0 +1,12 @@
+<blockquote class="mb-4 text-lg [&>:last-child]:mb-0{% if blockquote_classes|length > 0 %} {{ blockquote_classes|join(' ') }}{% endif %}"
+{% for attribute, value in blockquote_attributes %} {{ attribute }}="{{ value|e }}"{% endfor %}>
+    {% if 'blockquote--quotted' in blockquote_classes %}
+    <i class="bi bi-quote"></i>
+    {% endif %}
+
+    {{ blockquote_content }}
+    
+    {% if blockquote_footer %}
+        <footer class="-mt-4 mb-4 text-[0.875em] text-gray-600 before:content-['—_']">{{ blockquote_footer }}</footer>
+    {% endif %}
+</blockquote>

@@ -1,0 +1,6 @@
+{% set sizes = {
+  'small': 'size-[0.8rem] text-[0.8rem]',
+  'large': 'size-8 text-[2rem]',
+  'x-large': 'size-12 text-[3rem]',
+} %}
+<i class="bi bi-{{ icon_name }}{% if sizes[size] %} {{ sizes[size] }}{% endif %}"></i>

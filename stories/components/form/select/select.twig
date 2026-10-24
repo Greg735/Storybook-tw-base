@@ -1,0 +1,27 @@
+{#
+/**
+ * @file
+ * Select — same contract as Drupal core select.html.twig.
+ *
+ * Drupal usage (templates/form/select.html.twig):
+ *   {% include "@components/form/select/select.twig" %}
+ *
+ * Available variables:
+ * - attributes: HTML attributes for the <select> tag.
+ * - options: The <option> element children, each with type (option or
+ *   optgroup), value, label, selected and, for optgroups, options.
+ */
+#}
+<select{{ attributes.addClass('form-select') }}>
+  {%- for option in options -%}
+    {%- if option.type == 'optgroup' -%}
+      <optgroup label="{{ option.label }}">
+        {%- for sub_option in option.options -%}
+          <option value="{{ sub_option.value }}"{{ sub_option.selected ? ' selected="selected"' }}>{{ sub_option.label }}</option>
+        {%- endfor -%}
+      </optgroup>
+    {%- elseif option.type == 'option' -%}
+      <option value="{{ option.value }}"{{ option.selected ? ' selected="selected"' }}>{{ option.label }}</option>
+    {%- endif -%}
+  {%- endfor -%}
+</select>

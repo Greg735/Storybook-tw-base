@@ -1,0 +1,33 @@
+{#
+/**
+ * @file
+ * Textarea — same contract as Drupal core textarea.html.twig.
+ *
+ * Drupal usage (templates/form/textarea.html.twig):
+ *   {% include "@components/form/textarea/textarea.twig" %}
+ *
+ * Available variables:
+ * - wrapper_attributes: A list of HTML attributes for the wrapper element.
+ * - attributes: A list of HTML attributes for the <textarea> element.
+ * - resizable: none | vertical | horizontal | both.
+ * - required: An indicator for whether the textarea is required.
+ * - value: The textarea content.
+ */
+#}
+{% set resize_classes = {
+  'none': 'resize-none',
+  'vertical': 'resize-y',
+  'horizontal': 'resize-x',
+  'both': 'resize',
+} %}
+{%
+  set classes = [
+    'form-textarea',
+    'form-control',
+    resize_classes[resizable]|default(''),
+    required ? 'required' : '',
+  ]
+%}
+<div{{ wrapper_attributes.addClass('form-textarea-wrapper') }}>
+  <textarea{{ attributes.addClass(classes) }}>{{ value }}</textarea>
+</div>

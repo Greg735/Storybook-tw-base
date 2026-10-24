@@ -1,0 +1,18 @@
+{% set type_attr = type_attr|default('button') %}
+{% set button_attr = button_attr|default({}) %}
+{% set size = (size == "default") ? null : size %}
+{% set outline = outlined ? 'outline-' : '' %}
+{% set full_width = full_width ? 'w-full' : '' %}
+{% set rounded_pill = rounded_pill ? 'rounded-full' : '' %}
+
+<button type="{{ type_attr }}" 
+  class="btn 
+    {{ type ? 'btn-' ~ outline ~ type : 'btn-'~ outline ~ 'primary' }}
+    {{ size ? 'btn-' ~ size }}
+    {{ full_width }}
+    {{ rounded_pill }}
+    {% if button_classes|length > 0 %} {{ button_classes|join(' ') }}{% endif %}
+  "
+  {{ disabled ? 'disabled' }}
+  {% for attribute, value in button_attr %} {{ attribute }}="{{ value|e }}"{% endfor %}>
+  {{- label -}}</button>

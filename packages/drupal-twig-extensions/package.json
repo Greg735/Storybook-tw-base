@@ -1,0 +1,11 @@
+{
+  "name": "drupal-twig-extensions",
+  "version": "1.0.0-local",
+  "description": "Minimal local replacement for drupal-twig-extensions (attach_library only), required by vite-plugin-twig-drupal (no locutus dependency).",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./twig.js",
+    "./twig": "./twig.js"
+  }
+}

@@ -1,0 +1,12 @@
+{{ attach_library('storybook_tw_base/image-lightbox') }}
+<a href="{{ lightbox_dest_image_src|e }}" class="glightbox inline-block{% if lightbox_classes|length > 0 %} {{ lightbox_classes|join(' ') }}{% endif %}" data-alt="{{ alt|e }}"{% if lightbox_caption %} data-glightbox="description: {{ lightbox_caption|e }};"{% endif %}{% for attribute, value in image_lightbox_attributes %} {{ attribute }}="{{ value|e }}"{% endfor %}>
+  {% include "@components/image/image.twig" with {
+    src: src,
+    alt: alt,
+    width: width,
+    height: height,
+    image_classes: image_classes,
+    image_attributes: image_attributes,
+    picture_srcsets: picture_srcsets,
+  } %}
+</a>

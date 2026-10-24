@@ -1,0 +1,102 @@
+{
+  "name": "storybook-tw-base",
+  "version": "0.1.0",
+  "description": "Twig + Tailwind CSS components for Drupal themes, with their Storybook. Install it in a project to reuse and override the components.",
+  "type": "module",
+  "exports": {
+    "./storybook": "./config/storybook.js",
+    "./manager": "./config/manager.js",
+    "./assets": "./config/assets.mjs",
+    "./preview": "./config/preview.js",
+    "./layers": "./config/layers.js",
+    "./twig": "./packages/drupal-twig-extensions/twig.js",
+    "./stories/*": "./stories/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "config/",
+    "packages/",
+    "stories/",
+    "public/img/",
+    "public/css/fonts/OpenSans/"
+  ],
+  "scripts": {
+    "assets": "vite build --config vite.assets.config.mjs",
+    "assets:watch": "vite build --config vite.assets.config.mjs --watch",
+    "storybook": "storybook dev --no-open -p 6006 --host 0.0.0.0",
+    "develop": "concurrently --raw --kill-others \"npm run assets:watch\" \"npm run storybook\"",
+    "build-storybook": "storybook build",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "npm run lint:js && npm run format:check",
+    "lint:js": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "keywords": [
+    "Storybook",
+    "Tailwind",
+    "Twig",
+    "Drupal"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap-icons": "^1.13.2",
+    "glightbox": "^3.3.1",
+    "leaflet": "^1.9.4",
+    "masonry-layout": "^4.2.2",
+    "scrollcue": "^2.0.0"
+  },
+  "peerDependencies": {
+    "@storybook/addon-a11y": "^10.6.2",
+    "@storybook/addon-docs": "^10.6.2",
+    "@storybook/addon-links": "^10.6.2",
+    "@storybook/addon-vitest": "^10.6.2",
+    "@storybook/html-vite": "^10.6.2",
+    "@tailwindcss/node": "^4.1.0",
+    "@tailwindcss/postcss": "^4.1.0",
+    "postcss": "^8.5.28",
+    "storybook": "^10.6.2",
+    "tailwindcss": "^4.1.0",
+    "terser": "^5.31.1",
+    "tinyglobby": "^0.2.17",
+    "twig": "^3.0.0",
+    "vite": "^6.0.0 || ^7.0.0 || ^8.0.0",
+    "vite-plugin-twig-drupal": "^1.7.0"
+  },
+  "devDependencies": {
+    "@chromatic-com/storybook": "^5.5.1",
+    "@eslint/js": "^10.0.1",
+    "@storybook/addon-a11y": "^10.6.2",
+    "@storybook/addon-docs": "^10.6.2",
+    "@storybook/addon-links": "^10.6.2",
+    "@storybook/addon-themes": "^10.6.2",
+    "@storybook/addon-vitest": "^10.6.2",
+    "@storybook/html-vite": "^10.6.2",
+    "@tailwindcss/node": "^4.1.0",
+    "@tailwindcss/postcss": "^4.1.0",
+    "@vitest/browser-playwright": "^5.0.5",
+    "@vitest/coverage-v8": "^5.0.5",
+    "concurrently": "^10.0.6",
+    "drupal-twig-extensions": "file:packages/drupal-twig-extensions",
+    "eslint": "^10.13.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-storybook": "^10.6.2",
+    "globals": "^17.13.0",
+    "playwright": "^1.64.1",
+    "postcss": "^8.5.30",
+    "prettier": "^3.9.10",
+    "storybook": "^10.6.2",
+    "tailwindcss": "^4.1.0",
+    "terser": "^5.51.2",
+    "tinyglobby": "^0.2.17",
+    "twig": "^3.0.0",
+    "vite": "^8.3.4",
+    "vite-plugin-twig-drupal": "^1.7.0",
+    "vitest": "^5.0.5"
+  },
+  "overrides": {
+    "drupal-twig-extensions": "$drupal-twig-extensions"
+  }
+}

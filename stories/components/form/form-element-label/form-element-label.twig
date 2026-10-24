@@ -1,0 +1,28 @@
+{#
+/**
+ * @file
+ * Form element label — same contract as Drupal core form-element-label.html.twig.
+ *
+ * Drupal usage (templates/form/form-element-label.html.twig):
+ *   {% include "@components/form/form-element-label/form-element-label.twig" %}
+ *
+ * Available variables:
+ * - title: The label's text.
+ * - title_display: before | after (checkbox, radio) | invisible.
+ * - required: An indicator for whether the associated form element is required.
+ * - attributes: A list of HTML attributes for the label (includes "for").
+ */
+#}
+{%
+  set classes = [
+    title_display == 'after' ? 'option' : '',
+    title_display == 'after' ? '' : 'mb-2',
+    title_display == 'invisible' ? 'sr-only' : '',
+    required ? 'js-form-required' : '',
+    required ? 'form-required' : '',
+    required ? "after:ms-1 after:text-danger after:content-['*']" : '',
+  ]
+%}
+{% if title is not empty or required -%}
+  <label{{ attributes.addClass(classes) }}>{{ title }}</label>
+{%- endif %}

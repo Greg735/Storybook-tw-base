@@ -1,0 +1,7 @@
+/* Anchors (also the ones of the WYSIWYG content) stay clear of a sticky header. */
+@layer base {
+  a[id] {
+    scroll-margin-top: 8em;
+    display: block;
+  }
+}

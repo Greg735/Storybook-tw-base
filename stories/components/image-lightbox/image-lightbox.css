@@ -1,0 +1,8 @@
+@import 'glightbox/dist/css/glightbox.css' layer(components);
+
+/* Fix when html { height: 100% }: https://github.com/biati-digital/glightbox/issues/22 */
+@layer components {
+  .glightbox-open {
+    height: auto !important;
+  }
+}

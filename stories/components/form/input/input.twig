@@ -1,0 +1,51 @@
+{#
+/**
+ * @file
+ * Input — same contract as Drupal core input.html.twig.
+ *
+ * The classes are derived from the ones Drupal core already sets on each
+ * element type (form-text, form-checkbox, button…), so no preprocess is needed
+ * in the theme. A control with the "error" class is shown as invalid.
+ *
+ * Drupal usage (templates/form/input.html.twig):
+ *   {% include "@components/form/input/input.twig" %}
+ *
+ * Available variables:
+ * - attributes: A list of HTML attributes for the input element.
+ * - children: Optional additional rendered elements.
+ */
+#}
+{% set is_check = attributes.hasClass('form-checkbox') or attributes.hasClass('form-radio') %}
+{% set is_button = attributes.hasClass('button') and not attributes.hasClass('btn') %}
+{%
+  set is_control = attributes.hasClass('form-text')
+    or attributes.hasClass('form-email')
+    or attributes.hasClass('form-tel')
+    or attributes.hasClass('form-url')
+    or attributes.hasClass('form-search')
+    or attributes.hasClass('form-number')
+    or attributes.hasClass('form-date')
+    or attributes.hasClass('form-time')
+    or attributes.hasClass('form-file')
+    or attributes.hasClass('form-autocomplete')
+%}
+{% if is_button %}
+  {%
+    set button_style = attributes.hasClass('button--danger') ? 'btn-danger'
+      : (attributes.hasClass('button--primary') ? 'btn-primary' : 'btn-outline-primary')
+  %}
+{% endif %}
+{# mt-1 on form-text inputs: same spacing as in storybook-base, where
+   Bootstrap's .form-text (also a Drupal core class) added a top margin. #}
+{%
+  set classes = [
+    is_control ? 'form-control' : '',
+    attributes.hasClass('form-text') ? 'mt-1' : '',
+    is_check ? 'form-check-input' : '',
+    attributes.hasClass('form-color') ? 'form-control' : '',
+    attributes.hasClass('form-color') ? 'form-control-color' : '',
+    is_button ? 'btn' : '',
+    is_button ? button_style : '',
+  ]
+%}
+<input{{ attributes.addClass(classes) }} />{{ children }}

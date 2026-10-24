@@ -1,0 +1,17 @@
+@import 'leaflet/dist/leaflet.css' layer(components);
+
+/*
+ * Leaflet finds its marker images through this class: they are copied to
+ * img/leaflet/, next to the css/ directory of the compiled stylesheet.
+ */
+@layer components {
+  .leaflet-default-icon-path {
+    background-image: url('../img/leaflet/marker-icon.png');
+  }
+  .leaflet-control-layers-toggle {
+    background-image: url('../img/leaflet/layers.png');
+  }
+  .leaflet-retina .leaflet-control-layers-toggle {
+    background-image: url('../img/leaflet/layers-2x.png');
+  }
+}

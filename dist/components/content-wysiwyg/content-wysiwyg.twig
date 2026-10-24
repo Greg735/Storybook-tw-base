@@ -1,0 +1,1 @@
+<div class="mb-4 [&_p:last-child]:mb-0{% if content_classes|length > 0 %} {{ content_classes|join(' ') }}{% endif %}"{% for attribute, value in content_wysiwyg_attributes %} {{ attribute }}="{{ value|e }}"{% endfor %}>{{ content }}</div>

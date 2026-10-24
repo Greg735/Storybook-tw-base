@@ -1,0 +1,10 @@
+{% if highlight %}
+  {% if subtle %}
+    {% set highlight_classes = 'border-' ~ type ~ '-border-subtle bg-' ~ type ~ '-subtle' %}
+  {% else %}
+    {% set highlight_classes = 'border-' ~ type ~ ' text-bg-' ~ type %}
+  {% endif %}
+  {% set classes = 'rounded-xl border p-6 ' ~ highlight_classes ~ ' ' ~ classes %}
+{% endif %}
+
+<p {% if classes %} class="{{ classes }}"{% endif %}{% for attribute, value in paragraph_attributes %} {{ attribute }}="{{ value|e }}"{% endfor %}>{{ content }}</p>

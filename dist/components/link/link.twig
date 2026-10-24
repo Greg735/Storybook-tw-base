@@ -1,0 +1,22 @@
+{% set target = target ? target : '_self' %}
+{% set element = button ? 'btn' : 'link' %}
+{% set button_size = (button_size == "default") ? null : button_size %}
+{% set outline = outline ? '-outline' : null %}
+
+<a
+  href="{{ link_url }}" 
+  class="
+    mb-4
+    {{ button ? 'btn' }}
+    {{ button and button_size ? 'btn-' ~ button_size }}
+    {{ type ? element ~ outline ~ '-' ~ type : element ~ outline ~ '-primary' }}
+    {{ disabled and not button ? 'aria-disabled:pointer-events-none aria-disabled:cursor-not-allowed aria-disabled:text-[gray] aria-disabled:decoration-[gray]' : null }}
+    {% if link_classes|length > 0 %} {{ link_classes|join(' ') }}{% endif %}
+  " 
+  title="{{ link_title}}"
+  target="{{ target }}"
+  {{ disabled ? 'aria-disabled="true"' : null }}
+  {% for attribute, value in link_attributes %} {{ attribute }}="{{ value|e }}"{% endfor %}
+  >
+    {{- label -}}
+</a>

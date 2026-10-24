@@ -1,0 +1,3 @@
+<div class="relative inline-flex rounded-md align-middle [&>.btn]:relative [&>.btn]:flex-auto [&>.btn:active]:z-1 [&>.btn:focus]:z-1 [&>.btn:hover]:z-1 [&>.btn:not(:first-child)]:-ms-px [&>.btn:not(:first-child)]:rounded-s-none [&>.btn:not(:last-child)]:rounded-e-none" {% for attribute, value in buttons_attributes %} {{ attribute }}="{{ value|e }}"{% endfor %}>
+  {{ content }}
+</div>

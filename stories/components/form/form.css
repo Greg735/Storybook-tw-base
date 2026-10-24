@@ -1,0 +1,430 @@
+/*
+ * Form controls. The templates derive them from the classes Drupal core sets
+ * (form-text, form-checkbox…); a control with the "error" class or
+ * aria-invalid="true" is shown as invalid.
+ */
+
+@utility form-control {
+  display: block;
+  width: var(--form-control-width, 100%);
+  height: var(--form-control-height, auto);
+  min-height: var(--form-control-min-height, auto);
+  padding: var(--form-control-padding, 0.375rem 0.75rem);
+  font-size: var(--form-control-font-size, 1rem);
+  font-weight: 400;
+  line-height: var(--form-control-line-height, 1.5);
+  color: var(--color-body);
+  appearance: none;
+  background-color: var(--color-body-bg);
+  background-clip: padding-box;
+  border: 1px solid var(--color-border);
+  border-radius: var(--form-control-radius, var(--radius-md));
+  transition:
+    border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+  &[type='file'] {
+    overflow: hidden;
+  }
+  &[type='file']:not(:disabled):not([readonly]) {
+    cursor: pointer;
+  }
+  &:focus {
+    color: var(--color-body);
+    background-color: var(--color-body-bg);
+    border-color: rgb(52.549% 71.569% 99.608%);
+    outline: 0;
+    box-shadow: var(--focus-ring);
+  }
+  &::-webkit-date-and-time-value {
+    min-width: 85px;
+    height: 1.5em;
+    margin: 0;
+  }
+  &::-webkit-datetime-edit {
+    display: block;
+    padding: 0;
+  }
+  &::placeholder {
+    color: var(--color-muted);
+    opacity: 1;
+  }
+  &:disabled {
+    background-color: var(--color-secondary-bg);
+    opacity: 1;
+  }
+  &::file-selector-button {
+    padding: 0.375rem 0.75rem;
+    margin: -0.375rem -0.75rem;
+    margin-inline-end: 0.75rem;
+    color: var(--color-body);
+    background-color: var(--color-tertiary-bg);
+    pointer-events: none;
+    border-color: inherit;
+    border-style: solid;
+    border-width: 0;
+    border-inline-end-width: 1px;
+    border-radius: 0;
+  }
+  &:hover:not(:disabled):not([readonly])::file-selector-button {
+    background-color: var(--color-secondary-bg);
+  }
+  &:is(textarea) {
+    min-height: var(--form-control-min-height, calc(1.5em + 0.75rem + 2px));
+  }
+  &.is-valid {
+    border-color: var(--color-success);
+    padding-right: calc(1.5em + 0.75rem);
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%230dff8e' d='M2.3 6.73.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right calc(0.375em + 0.1875rem) center;
+    background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+  }
+  &.is-valid:focus {
+    border-color: var(--color-success);
+    box-shadow: 0 0 0 0.25rem rgb(13 255 142 / 0.25);
+  }
+  &.error,
+  &.is-invalid,
+  &[aria-invalid='true'] {
+    border-color: var(--color-danger);
+    padding-right: calc(1.5em + 0.75rem);
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right calc(0.375em + 0.1875rem) center;
+    background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+  }
+  &:is(textarea):is(.error, .is-invalid, [aria-invalid='true']) {
+    background-position: top calc(0.375em + 0.1875rem) right calc(0.375em + 0.1875rem);
+  }
+  &:is(.error, .is-invalid, [aria-invalid='true']):focus {
+    border-color: var(--color-danger);
+    box-shadow: 0 0 0 0.25rem rgb(220 53 69 / 0.25);
+  }
+}
+
+/* Sizes (with form-control). */
+@utility form-control-sm {
+  --form-control-padding: 0.25rem 0.5rem;
+  --form-control-min-height: calc(1.5em + 0.5rem + 2px);
+  --form-control-font-size: 0.875rem;
+  --form-control-radius: var(--radius-sm);
+}
+
+@utility form-control-lg {
+  --form-control-padding: 0.5rem 1rem;
+  --form-control-min-height: calc(1.5em + 1rem + 2px);
+  --form-control-font-size: 1.25rem;
+  --form-control-radius: var(--radius-lg);
+}
+
+/* Read-only value displayed as plain text, aligned with the controls. */
+@utility form-control-plaintext {
+  display: block;
+  width: 100%;
+  padding: 0.375rem 0;
+  margin-bottom: 0;
+  line-height: 1.5;
+  color: var(--color-body);
+  background-color: transparent;
+  border: solid transparent;
+  border-width: 1px 0;
+  &:focus {
+    outline: 0;
+  }
+}
+
+/* Floating label: the label (after the control) sits in the control. */
+@utility form-floating {
+  position: relative;
+  & > .form-control {
+    --form-control-height: calc(3.5rem + 2px);
+    --form-control-min-height: calc(3.5rem + 2px);
+    --form-control-padding: 1rem 0.75rem;
+    --form-control-line-height: 1.25;
+  }
+  & > .form-control::placeholder {
+    color: transparent;
+  }
+  & > .form-control:focus,
+  & > .form-control:not(:placeholder-shown) {
+    --form-control-padding: 1.625rem 0.75rem 0.625rem;
+  }
+  & > label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    max-width: 100%;
+    height: 100%;
+    padding: 1rem 0.75rem;
+    overflow: hidden;
+    color: rgb(33 37 41 / 0.65);
+    text-align: start;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    pointer-events: none;
+    border: 1px solid transparent;
+    transform-origin: 0 0;
+    transition:
+      opacity 0.1s ease-in-out,
+      transform 0.1s ease-in-out;
+  }
+  & > .form-control:focus ~ label,
+  & > .form-control:not(:placeholder-shown) ~ label {
+    transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem);
+  }
+}
+
+/* Color input (with form-control). */
+@utility form-control-color {
+  --form-control-width: 3rem;
+  --form-control-height: calc(1.5em + 0.75rem + 2px);
+  --form-control-padding: 0.375rem;
+  &:not(:disabled):not([readonly]) {
+    cursor: pointer;
+  }
+  &::-moz-color-swatch {
+    border: 0 !important;
+    border-radius: var(--radius-md);
+  }
+  &::-webkit-color-swatch {
+    border: 0 !important;
+    border-radius: var(--radius-md);
+  }
+}
+
+@utility form-select {
+  display: block;
+  width: 100%;
+  padding: 0.375rem 2.25rem 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--color-body);
+  appearance: none;
+  background-color: var(--color-body-bg);
+  background-image:
+    url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e"),
+    var(--form-select-icon, none);
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 16px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  transition:
+    border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+  &:focus {
+    border-color: rgb(52.549% 71.569% 99.608%);
+    outline: 0;
+    box-shadow: var(--focus-ring);
+  }
+  &[multiple],
+  &[size]:not([size='1']) {
+    padding-right: 0.75rem;
+    background-image: none;
+  }
+  &:disabled {
+    background-color: var(--color-secondary-bg);
+  }
+  &:-moz-focusring {
+    color: transparent;
+    text-shadow: 0 0 0 var(--color-body);
+  }
+  &.error,
+  &[aria-invalid='true'] {
+    --form-select-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
+    border-color: var(--color-danger);
+    padding-right: 4.125rem;
+    background-position:
+      right 0.75rem center,
+      center right 2.25rem;
+    background-size:
+      16px 12px,
+      calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+  }
+  &:is(.error, [aria-invalid='true']):focus {
+    border-color: var(--color-danger);
+    box-shadow: 0 0 0 0.25rem rgb(220 53 69 / 0.25);
+  }
+}
+
+/* Toggle switch: a checkbox in a form-check form-switch wrapper. */
+@utility form-switch {
+  padding-left: 2.5em;
+  & .form-check-input {
+    --form-check-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba%280, 0, 0, 0.25%29'/%3e%3c/svg%3e");
+    width: 2em;
+    margin-left: -2.5em;
+    background-position: left center;
+    border-radius: 2em;
+    transition: background-position 0.15s ease-in-out;
+  }
+  & .form-check-input:focus {
+    --form-check-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgb%2852.549%25, 71.569%25, 99.608%25%29'/%3e%3c/svg%3e");
+  }
+  & .form-check-input[type='checkbox']:checked {
+    background-position: right center;
+    --form-check-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e");
+  }
+}
+
+/* Checkbox or radio, in a form-check wrapper. */
+@utility form-check {
+  display: block;
+  min-height: 1.5rem;
+  padding-left: 1.5em;
+  margin-bottom: var(--form-check-mb, 0.125rem);
+  & .form-check-input {
+    float: left;
+    margin-left: -1.5em;
+  }
+  & .form-check-input:disabled ~ label {
+    cursor: default;
+    opacity: 0.5;
+  }
+}
+
+@utility form-check-input {
+  flex-shrink: 0;
+  width: 1em;
+  height: 1em;
+  margin-top: 0.25em;
+  vertical-align: top;
+  appearance: none;
+  background-color: var(--color-body-bg);
+  background-image: var(--form-check-image, none);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  border: 1px solid var(--color-border);
+  print-color-adjust: exact;
+  &[type='checkbox'] {
+    border-radius: 0.25em;
+  }
+  &[type='radio'] {
+    border-radius: 50%;
+  }
+  &:active {
+    filter: brightness(90%);
+  }
+  &:focus {
+    border-color: rgb(52.549% 71.569% 99.608%);
+    outline: 0;
+    box-shadow: var(--focus-ring);
+  }
+  &:checked {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+  }
+  &:checked[type='checkbox'] {
+    --form-check-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/%3e%3c/svg%3e");
+  }
+  &:checked[type='radio'] {
+    --form-check-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='2' fill='%23fff'/%3e%3c/svg%3e");
+  }
+  &[type='checkbox']:indeterminate {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    --form-check-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10h8'/%3e%3c/svg%3e");
+  }
+  &:disabled {
+    pointer-events: none;
+    filter: none;
+    opacity: 0.5;
+  }
+  &.error,
+  &[aria-invalid='true'] {
+    border-color: var(--color-danger);
+  }
+  &:is(.error, [aria-invalid='true']):checked {
+    background-color: var(--color-danger);
+  }
+  &:is(.error, [aria-invalid='true']):focus {
+    box-shadow: 0 0 0 0.25rem rgb(220 53 69 / 0.25);
+  }
+  &:is(.error, [aria-invalid='true']) ~ label {
+    color: var(--color-danger);
+  }
+}
+
+@utility form-range {
+  width: 100%;
+  height: 1.5rem;
+  padding: 0;
+  appearance: none;
+  background-color: transparent;
+  &:focus {
+    outline: 0;
+  }
+  &:focus::-webkit-slider-thumb {
+    box-shadow:
+      0 0 0 1px #fff,
+      var(--focus-ring);
+  }
+  &:focus::-moz-range-thumb {
+    box-shadow:
+      0 0 0 1px #fff,
+      var(--focus-ring);
+  }
+  &::-moz-focus-outer {
+    border: 0;
+  }
+  &::-webkit-slider-thumb {
+    width: 1rem;
+    height: 1rem;
+    margin-top: -0.25rem;
+    appearance: none;
+    background-color: var(--color-primary);
+    border: 0;
+    border-radius: 1rem;
+    transition:
+      background-color 0.15s ease-in-out,
+      border-color 0.15s ease-in-out,
+      box-shadow 0.15s ease-in-out;
+  }
+  &::-webkit-slider-thumb:active {
+    background-color: rgb(71.529% 82.941% 99.765%);
+  }
+  &::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 0.5rem;
+    color: transparent;
+    cursor: pointer;
+    background-color: var(--color-secondary-bg);
+    border-color: transparent;
+    border-radius: 1rem;
+  }
+  &::-moz-range-thumb {
+    width: 1rem;
+    height: 1rem;
+    appearance: none;
+    background-color: var(--color-primary);
+    border: 0;
+    border-radius: 1rem;
+    transition:
+      background-color 0.15s ease-in-out,
+      border-color 0.15s ease-in-out,
+      box-shadow 0.15s ease-in-out;
+  }
+  &::-moz-range-thumb:active {
+    background-color: rgb(71.529% 82.941% 99.765%);
+  }
+  &::-moz-range-track {
+    width: 100%;
+    height: 0.5rem;
+    color: transparent;
+    cursor: pointer;
+    background-color: var(--color-secondary-bg);
+    border-color: transparent;
+    border-radius: 1rem;
+  }
+}
