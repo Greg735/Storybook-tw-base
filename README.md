@@ -55,7 +55,9 @@ With DDEV, Storybook is available at **https://storybook-tw-base.ddev.site:6008*
 
 ### Styles
 
-- `stories/tailwind.css` is the design system entry: Tailwind's theme and utilities (no preflight), then the foundations and the component styles. Automatic source detection is off (`source(none)`): the classes are found where the build says (see below).
+- `stories/core.css`: Tailwind's theme and utilities (no preflight), the foundations and the component utilities. Everything in it is free when unused (tokens and base styles aside): utilities are only output when a scanned source uses them. Automatic source detection is off (`source(none)`): the classes are found where the build says (see below).
+- `<name>.deps.css` (listed by `stories/components/deps.css` and `stories/utilities/deps.css`): what a component pulls in only when it is used: its vendor CSS (Leaflet, GLightbox, Bootstrap Icons, scrollCue) and the classes picked by Twig variables (`@source inline(…)`).
+- `stories/tailwind.css`: the whole design system, `core.css` plus every `deps.css` (Storybook, or a theme that wants everything).
 - `stories/foundations/theme.css`: the design tokens (`@theme`): colors (`primary`…`dark`, `blue`…`teal`, `gray-100`…`gray-900`, `-subtle`, `-border-subtle`, `-emphasis`), `--contrast-*` (readable text color on each background), breakpoints (`sm` 576px … `xxl` 1400px), container widths, heading and display sizes (`text-h1`…`text-h6`, `text-display-1`…`6`), radii, shadows. Same values as the former Bootstrap configuration; Tailwind's default palette, radii, shadows and font sizes are reset.
 - `stories/foundations/base.css`: element defaults, the equivalent of Bootstrap's reboot (headings, paragraphs, lists, links, forms…), so that plain HTML from Drupal or CKEditor keeps the same look.
 - `stories/foundations/utilities.css` and the component CSS files: custom Tailwind utilities (`@utility`), used like any other class and only output when used: `container`, `text-bg-*`, `bg-gradient`, `btn-close`, `visually-hidden`, `btn` + `btn-*` / `btn-outline-*` / `btn-sm` / `btn-lg`, `badge`, `link-*`, `form-control`, `form-select`, `form-check`, `form-check-input`, `form-switch`, `form-floating`, `form-range`…
@@ -97,7 +99,8 @@ A behavior declares the Drupal libraries it needs in its header (vendor librarie
 
 ### Drupal integration
 
-- **Templates**: `dist/components/`, included with `@components/…`.
+- **Templates**: `dist/components/`, included with `@components/…` (Components module namespace).
+- **Reference theme**: drusttw4 (Drupal 11), which syncs `dist/`, compiles its CSS from the components it includes and generates its libraries file.
 - **CSS**: compiled by the Drupal theme, from the sources in `dist/` (only `tailwindcss` needs to be installed):
 
   ```css
@@ -105,7 +108,7 @@ A behavior declares the Drupal libraries it needs in its header (vendor librarie
   @source '../templates';
   ```
 
-  `dist/css/tailwind.css` scans `dist/components/`; add the theme templates with `@source`. Font URLs are relative to `dist/css/`: write the compiled CSS there, or copy `dist/css/fonts/` next to it. The compiled `dist/css/style.css` / `style.min.css` remain available if the theme does not compile its CSS.
+  `dist/css/tailwind.css` scans all of `dist/components/` and imports every component dependency; add the theme templates with `@source`. To compile only the components the theme uses, import `dist/css/src/core.css` instead, with an `@source` and the `<name>.deps.css` of each component its templates include: the [drusttw4](https://github.com/Greg735/drusttw4) theme does it automatically (`scripts/build-css.mjs` follows the `@components/…` includes). Font URLs are relative to `dist/css/`: write the compiled CSS there, or copy `dist/css/fonts/` next to it. The compiled `dist/css/style.css` / `style.min.css` remain available if the theme does not compile its CSS.
 - **JS**: one Drupal library per behavior. Copy `dist/libraries.yml` into `<theme>.libraries.yml`: it lists `vendor-<name>` libraries (`dist/js/vendor/`) and one library per behavior (`dist/js/components/<name>.js`, depending on `core/drupal`, `core/once` and its vendors). Components with JS attach theirs, e.g. `{{ attach_library('storybook_tw_base/accordion') }}`; in `dist/components/`, `storybook_tw_base` is replaced by the `library` option of the project (see [Start a new project](#start-a-new-project)). The utilities libraries (`tooltips`, `masonry`, `animations`) are attached by the theme where it needs them (the carousel attaches `image-lightbox` and `animations` itself). `dist/js/sb-main.js` still bundles everything, for a theme that loads all the JS at once.
 
 ## File structure
@@ -330,11 +333,13 @@ addons.setConfig({
 
 ### 4. CSS entry point
 
-`stories/main.css`:
+The project CSS is split like storybook-tw-base's, so that a Drupal theme can compile only the components it uses (see [drusttw4](https://github.com/Greg735/drusttw4)).
+
+`stories/core.css`: what costs nothing when unused (tokens, base styles, component utilities):
 
 ```css
-/* storybook-tw-base design system (tokens, base styles, utilities, components). */
-@import 'storybook-tw-base/stories/tailwind.css';
+/* storybook-tw-base core (Tailwind without preflight, tokens, base, components). */
+@import 'storybook-tw-base/stories/core.css';
 
 /* Token overrides. */
 @theme {
@@ -346,13 +351,25 @@ addons.setConfig({
 @import './components/index.css';
 ```
 
-Keep the `storybook-tw-base/stories/tailwind.css` import path: the assets build recognizes it to apply `exclude` and the replaced component styles, and rewrites it in the sources copied to `dist/css/src/`. Do not add `@source` lines: the build scans the `stories/` folder of the project and of storybook-tw-base, and `dist/css/tailwind.css` scans `dist/components/`.
+`stories/main.css` (Storybook entry):
+
+```css
+@import './core.css';
+/* Dependencies (vendor CSS, safelists) of the storybook-tw-base components. */
+@import 'storybook-tw-base/stories/deps.css';
+/* Dependencies of the project components, if any. */
+@import './components/deps.css';
+```
+
+Import storybook-tw-base files with the `storybook-tw-base/stories/…` path: the assets build recognizes it to apply `exclude` and the replaced component styles, and rewrites it in the sources copied to `dist/css/src/`. Do not add `@source` lines: the build scans the `stories/` folder of the project and of storybook-tw-base, and `dist/css/tailwind.css` scans `dist/components/`.
 
 `stories/components/index.css` (empty to start with): one line per project component with a CSS file, and per storybook-tw-base component whose CSS the project replaces:
 
 ```css
 @import './hero/hero.css';
 ```
+
+`stories/components/deps.css` (empty to start with): one line per project component with dependencies (`<name>.deps.css`: vendor CSS, classes picked by Twig variables), or per storybook-tw-base `<name>.deps.css` the project replaces.
 
 ### 5. Install and run
 
@@ -374,7 +391,7 @@ The Storybook shows every storybook-tw-base story (including *Documentation / In
 
 See [Use in a project](#use-in-a-project) for where each change goes. In short, a project file at the same path as a storybook-tw-base file replaces it, and only that file:
 
-- **tokens** (colors, fonts, sizes): an `@theme` block in `stories/main.css`, after the storybook-tw-base import
+- **tokens** (colors, fonts, sizes): an `@theme` block in `stories/core.css`, after the storybook-tw-base import
 - **component styles**: `stories/components/<name>/<name>.css`, imported in `stories/components/index.css`
 - **template**: `stories/components/<name>/<name>.twig`
 - **story or docs**: `stories/components/<name>/<name>.stories.js`, importing the template with `@components/<name>/<name>.twig` (it resolves to the project template if there is one, else to the storybook-tw-base one). A relative import such as `./<name>.docs.md?raw` needs the file in the project too: use `@components/<name>/<name>.docs.md?raw` to keep the base docs
@@ -418,7 +435,7 @@ What a project gets from storybook-tw-base, and how it overrides it:
 
 | To… | In the project |
 | --- | --- |
-| change colors, fonts, spacing | redefine the tokens of `stories/foundations/theme.css` in an `@theme` block of `stories/main.css`, after the storybook-tw-base import (a color usually comes with its `--contrast-*` token) |
+| change colors, fonts, spacing | redefine the tokens of `stories/foundations/theme.css` in an `@theme` block of `stories/core.css`, after the storybook-tw-base import (a color usually comes with its `--contrast-*` token) |
 | replace a component's styles | add `stories/components/<name>/<name>.css` (only that file) and import it in `stories/components/index.css`: the storybook-tw-base `<name>.css` is then left out. To extend it instead, start your file with `@import 'storybook-tw-base/stories/components/<name>/<name>.css';` |
 | replace a component's template | add `stories/components/<name>/<name>.twig`: it wins everywhere (`@components/…` includes, base stories, `dist/`) |
 | replace a behavior or a story | add the `*.behaviors.js` or `*.stories.js` at the same path (a replaced base story is hidden). A story alone works: it imports the template with `@components/…`, which resolves to the storybook-tw-base one. Keep the same file path and title, else both stories are listed |
@@ -434,6 +451,8 @@ In the project's Storybook, the sidebar (`sidebar` from `storybook-tw-base/manag
 | none | the project | – |
 
 The tags are added when the stories are indexed (`experimental_indexers` in `config/storybook.js`), so the sidebar tag filter can also show or hide each origin. Nothing is hidden by default.
+
+Importing `storybook-tw-base/manager` also hides the addon panel on the stories tagged `no-panel` (such as *Documentation / Introduction*) and shows it again on the others.
 
 ### Excluding components
 

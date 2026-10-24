@@ -361,8 +361,12 @@
     display: none !important;
   }
 
-  /* The last child of the main content has no bottom margin. */
-  #main-content *:not(h1):last-child {
+  /*
+   * The last child of the main content has no bottom margin (!important: it
+   * wins over the margin utilities). A project whose layout keeps those
+   * margins sets data-keep-last-margin on #main-content.
+   */
+  #main-content:not([data-keep-last-margin]) *:not(h1):last-child {
     margin-bottom: 0 !important;
   }
 }

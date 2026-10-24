@@ -1,6 +1,6 @@
 /*
- * storybook-tw-base design system: Tailwind theme and utilities, design
- * tokens, base styles, then the component styles.
+ * storybook-tw-base design system, with every component: core.css, plus the
+ * dependencies (<name>.deps.css) of all the components.
  *
  * Import it instead of "tailwindcss" (it leaves out Tailwind's preflight, see
  * foundations/base.css), then declare where your classes are with @source:
@@ -8,19 +8,8 @@
  *   @import 'storybook-tw-base/stories/tailwind.css';
  *   @source '../templates';
  *
- * Automatic source detection is off: the assets build adds the stories of
- * each layer, and the Drupal entry (dist/css/tailwind.css) adds
- * dist/components.
+ * A Drupal theme that only wants the components it uses imports core.css and
+ * the deps of those components instead (see README, "Drupal theme").
  */
-@layer theme, base, components, utilities;
-
-@import 'tailwindcss/theme.css' layer(theme);
-@import 'tailwindcss/utilities.css' layer(utilities) source(none);
-
-@import './foundations/theme.css';
-@import './foundations/typography/fonts.css';
-@import './foundations/base.css';
-@import './foundations/utilities.css';
-
-@import './components/index.css';
-@import './utilities/index.css';
+@import './core.css';
+@import './deps.css';

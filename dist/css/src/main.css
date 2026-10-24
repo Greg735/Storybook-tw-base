@@ -1,2 +1,2 @@
-/* Storybook entry (a project imports ./tailwind.css). */
+/* Storybook entry (a project imports storybook-tw-base/stories/tailwind.css). */
 @import './tailwind.css';

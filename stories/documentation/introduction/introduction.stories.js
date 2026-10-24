@@ -4,9 +4,10 @@ const count = (modules) => Object.keys(modules).length;
 
 export default {
   title: 'Documentation/Introduction',
-  // Standalone page: no autodocs, and the single story is hoisted in the
-  // sidebar because its name matches the component name.
-  tags: ['!autodocs'],
+  // Standalone page: no autodocs, no addon panel (see config/manager.js), and
+  // the single story is hoisted in the sidebar because its name matches the
+  // component name.
+  tags: ['!autodocs', 'no-panel'],
   parameters: {
     layout: 'fullscreen',
     controls: { disable: true },

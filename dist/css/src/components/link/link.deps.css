@@ -1,0 +1,9 @@
+/*
+ * Dynamic link colors (link-{{ type }}).
+ *
+ * What the component pulls in only when it is used (a theme imports this
+ * file for the components its templates include, see README).
+ */
+@source inline('link-{primary,secondary,success,info,warning,danger,light,dark,blue,indigo,purple,pink,red,orange,yellow,green,teal,cyan,black,white,gray,gray-100,gray-200,gray-300,gray-400,gray-500,gray-600,gray-700,gray-800,gray-900,gray-dark}');
+@source inline('btn-{primary,secondary,success,info,warning,danger,light,dark,blue,indigo,purple,pink,red,orange,yellow,green,teal,cyan,black,white,gray,gray-100,gray-200,gray-300,gray-400,gray-500,gray-600,gray-700,gray-800,gray-900,gray-dark}');
+@source inline('btn-outline-{primary,secondary,success,info,warning,danger,light,dark,blue,indigo,purple,pink,red,orange,yellow,green,teal,cyan,black,white,gray,gray-100,gray-200,gray-300,gray-400,gray-500,gray-600,gray-700,gray-800,gray-900,gray-dark}');

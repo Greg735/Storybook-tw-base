@@ -1,5 +1,7 @@
 import { addons } from 'storybook/manager-api';
 import MyTheme from './MyTheme';
+// Hides the addon panel on the stories tagged "no-panel".
+import '../config/manager.js';
 
 addons.setConfig({
   theme: MyTheme,

@@ -1,0 +1,24 @@
+/*
+ * storybook-tw-base core: Tailwind theme and utilities, design tokens, base
+ * styles and the component utilities (btn, badge, form-control…).
+ *
+ * Utilities (built-in or @utility) only end up in the compiled CSS when a
+ * scanned source uses them: importing this file costs nothing more than the
+ * tokens and the base styles. What a component pulls in when it is used
+ * (vendor CSS, classes picked by Twig variables) is in its <name>.deps.css.
+ *
+ * Tailwind's automatic source detection is off: declare the sources with
+ * @source.
+ */
+@layer theme, base, components, utilities;
+
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css' layer(utilities) source(none);
+
+@import './foundations/theme.css';
+@import './foundations/typography/fonts.css';
+@import './foundations/base.css';
+@import './foundations/utilities.css';
+
+@import './components/index.css';
+@import './utilities/index.css';

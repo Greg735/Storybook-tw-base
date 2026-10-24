@@ -3,7 +3,7 @@
  * configuration (foundations/_variables.scss in storybook-base).
  *
  * A project overrides a token by redefining it in its own @theme block, after
- * importing ../tailwind.css:
+ * importing storybook-tw-base/stories/tailwind.css:
  *
  *   @theme {
  *     --color-primary: #c00;

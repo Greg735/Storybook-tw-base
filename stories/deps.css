@@ -1,0 +1,7 @@
+/*
+ * Dependencies (<name>.deps.css) of all the storybook-tw-base components:
+ * vendor CSS and classes picked by Twig variables. A project imports it after
+ * its core.css (see README, "Start a new project").
+ */
+@import './components/deps.css';
+@import './utilities/deps.css';

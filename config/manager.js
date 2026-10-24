@@ -12,9 +12,14 @@
  * their files (template, styles or behaviors). Project components have no icon.
  * The origin comes from the tags added by storybookIndexers() (storybook.js),
  * which can also be used in the sidebar tag filter.
+ *
+ * Importing this module also hides the addon panel on the stories tagged
+ * "no-panel" (the Introduction), and shows it again on the other stories.
  */
 import { createElement } from 'react';
 import { BoxIcon, EditIcon } from '@storybook/icons';
+import { STORY_CHANGED, STORY_RENDERED } from 'storybook/internal/core-events';
+import { addons } from 'storybook/manager-api';
 
 // Same values as BASE_TAG and OVERRIDDEN_TAG in storybook.js (Node side).
 const BASE_TAG = 'storybook-tw-base';
@@ -52,3 +57,23 @@ export const renderLabel = (item) => {
 };
 
 export const sidebar = { renderLabel };
+
+// Stories tagged with it have no addon panel (story parameters cannot do it:
+// the panel options of a story are only applied on the first page load).
+export const NO_PANEL_TAG = 'no-panel';
+
+addons.register('storybook-tw-base/no-panel', (api) => {
+  const update = () => {
+    const story = api.getCurrentStoryData();
+    if (story?.type !== 'story') {
+      return;
+    }
+    const hide = Boolean(story.tags?.includes(NO_PANEL_TAG));
+    if (api.getIsPanelShown() === hide) {
+      api.togglePanel(!hide);
+    }
+  };
+  // STORY_CHANGED is not emitted for the first story of the page load.
+  api.on(STORY_CHANGED, update);
+  api.on(STORY_RENDERED, update);
+});

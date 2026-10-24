@@ -37,7 +37,7 @@ Agents working in this repository should preserve the current Storybook + Twig +
 - `config/preview.js` (used by `.storybook/preview.js`)
 - `config/preview-head.html`
 - `config/layers.js` (project → storybook-tw-base file resolution, `exclude` and `library` options)
-- `stories/tailwind.css` (design system entry) and `stories/main.css` (Storybook entry)
+- `stories/core.css`, `stories/deps.css`, `stories/tailwind.css` (design system entries) and `stories/main.css` (Storybook entry)
 - `.storybook/manager.js`
 - `.storybook/MyTheme.js`
 
@@ -51,7 +51,7 @@ Agents working in this repository should preserve the current Storybook + Twig +
 - `stories/foundations/`
 - `stories/utilities/`
 - `stories/documentation/`
-- `stories/tailwind.css`, `stories/main.css`
+- `stories/core.css`, `stories/deps.css`, `stories/tailwind.css`, `stories/main.css`
 - `.storybook/`
 - `config/`
 - `packages/`
@@ -190,7 +190,9 @@ Do not move a distributable template to `*.local.twig` unless that is intentiona
 
 ## Styles
 
-- `stories/tailwind.css`: the design system entry, imported by the projects. It imports Tailwind's theme and utilities **without preflight** (`source(none)`: no automatic source detection), then `foundations/theme.css`, `foundations/typography/fonts.css`, `foundations/base.css`, `foundations/utilities.css`, `components/index.css` and `utilities/index.css`
+- `stories/core.css`: imported by the projects' `core.css`. Tailwind's theme and utilities **without preflight** (`source(none)`: no automatic source detection), then `foundations/theme.css`, `foundations/typography/fonts.css`, `foundations/base.css`, `foundations/utilities.css`, `components/index.css` and `utilities/index.css`. Free when unused, tokens and base styles aside
+- `stories/deps.css`: `components/deps.css` and `utilities/deps.css`, the `<name>.deps.css` of every component (vendor CSS, safelists), imported by the projects' `main.css`. A Drupal theme imports only those of the components it uses
+- `stories/tailwind.css`: `core.css` + `deps.css`, the whole design system
 - `stories/main.css`: the Storybook entry of this repository (`@import './tailwind.css';`)
 - `foundations/theme.css`: design tokens (`@theme`), the former Bootstrap variables: colors with their `-subtle`, `-border-subtle`, `-emphasis` variants, `--contrast-*` (readable text color per background), `--btn-tint-*`, breakpoints `sm`…`xxl` (576…1400px), container widths, `text-h1`…`text-h6`, `text-display-1`…`6`, radii, shadows. Tailwind's own palette, radii, shadows and font sizes are reset (`--*: initial`)
 - `foundations/base.css`: element defaults (`@layer base`), the equivalent of Bootstrap's reboot, so that Drupal and CKEditor markup looks the same
@@ -407,8 +409,8 @@ Files are resolved through two layers (`config/layers.js`): the project `stories
 - **Stories**: a storybook-tw-base story is hidden when the project has a story at the same path
 - **Behaviors**: a project `*.behaviors.js` replaces the storybook-tw-base one at the same path (also in `dist/js/components/` and `dist/libraries.yml`)
 - **dist/components, images, fonts**: storybook-tw-base files first, then the project ones on top
-- **CSS**: the project `stories/main.css` imports `storybook-tw-base/stories/tailwind.css` (keep this exact path: the build rewrites it), then its `@theme` token overrides, then its own `stories/components/index.css`. A project `stories/components/<name>/<name>.css` **replaces** the storybook-tw-base one (its line is dropped from the base index); the project file can `@import 'storybook-tw-base/stories/components/<name>/<name>.css';` to extend it instead. The build scans the `stories/` folder of both layers: no `@source` in the project entry
-- **Drupal**: `dist/css/src/` holds the project CSS at its root and the storybook-tw-base CSS in `dist/css/src/storybook-tw-base/`; the theme compiles `dist/css/tailwind.css`
+- **CSS**: the project `stories/core.css` imports `storybook-tw-base/stories/core.css`, then its `@theme` token overrides, then its own `stories/components/index.css`; its `stories/main.css` imports `./core.css`, `storybook-tw-base/stories/deps.css` and its own `stories/components/deps.css`. Import storybook-tw-base files with the `storybook-tw-base/stories/…` path: the build rewrites it. A project `stories/components/<name>/<name>.css` **replaces** the storybook-tw-base one (its line is dropped from the base index); the project file can `@import 'storybook-tw-base/stories/components/<name>/<name>.css';` to extend it instead. The build scans the `stories/` folder of both layers: no `@source` in the project entry
+- **Drupal**: `dist/css/src/` holds the project CSS at its root and the storybook-tw-base CSS in `dist/css/src/storybook-tw-base/`; the theme compiles `dist/css/tailwind.css` (everything), or the project `dist/css/src/core.css` plus the deps of the components it uses (drusttw4)
 
 ### Origin of the stories
 

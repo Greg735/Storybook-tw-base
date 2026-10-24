@@ -1,3 +1,0 @@
-/* Highlight colors passed as Twig variables. */
-@source inline('border-{primary,secondary,success,info,warning,danger,light,dark}{,-border-subtle}');
-@source inline('bg-{primary,secondary,success,info,warning,danger,light,dark}-subtle');

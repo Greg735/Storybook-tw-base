@@ -1,3 +1,9 @@
+/*
+ * GLightbox styles.
+ *
+ * What the component pulls in only when it is used (a theme imports this
+ * file for the components its templates include, see README).
+ */
 @import 'glightbox/dist/css/glightbox.css' layer(components);
 
 /* Fix when html { height: 100% }: https://github.com/biati-digital/glightbox/issues/22 */

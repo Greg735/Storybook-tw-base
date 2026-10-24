@@ -1,0 +1,7 @@
+/*
+ * Bootstrap Icons font: <i class="bi bi-<name>"></i>.
+ *
+ * What the component pulls in only when it is used (a theme imports this
+ * file for the components its templates include, see README).
+ */
+@import '../../vendor/bootstrap-icons.css' layer(components);

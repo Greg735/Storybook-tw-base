@@ -12,7 +12,9 @@
  * Behaviors, Twig templates, CSS sources, images and fonts are collected from
  * the layers (see layers.js): storybook-tw-base first, then the project, whose
  * files override the ones at the same path. Styles come from the project
- * stories/main.css, which imports storybook-tw-base/stories/tailwind.css.
+ * stories/main.css: its stories/core.css (storybook-tw-base/stories/core.css,
+ * the project tokens and components), then storybook-tw-base/stories/deps.css
+ * and the project deps.
  *
  * Output (consumed by Storybook from public/ and by the Drupal theme from dist/):
  * - public/css/style.css: compiled Tailwind CSS for Storybook (classes found in
@@ -46,9 +48,9 @@ import { DEFAULT_LIBRARY, readLibrary, resolveLayers } from './layers.js';
 
 const config = {
   stylesMain: 'stories/main.css',
-  // storybook-tw-base design system entry, imported by the project main.css.
-  stylesBase: 'tailwind.css',
-  stylesImport: 'storybook-tw-base/stories/tailwind.css',
+  // Imports of storybook-tw-base CSS files by the project CSS
+  // ('storybook-tw-base/stories/core.css'…), rewritten to the copied sources.
+  stylesImport: /(['"])storybook-tw-base\/stories\/([^'"]+)\1/g,
   // Vendor libraries: JS (classic scripts exposing a global) and CSS (imported
   // by the component styles, copied to dist/css/src/vendor/ for the theme).
   vendors: {
@@ -207,8 +209,9 @@ const warnExcludedIncludes = async () => {
 /*
  * Styles.
  *
- * stories/components/index.css and stories/utilities/index.css have one
- * `@import './<name>/<name>.css';` line per component. In a project, the
+ * stories/components/index.css and deps.css (and the same in stories/utilities/)
+ * have one `@import './<name>/<name>.css';` (or `<name>.deps.css`) line per
+ * component. In a project, the
  * storybook-tw-base lines are left out for the excluded components and for
  * the ones the project replaces (same file, e.g.
  * stories/components/badge/badge.css, imported by the project main.css; it can
@@ -236,7 +239,7 @@ const filterIndex = (contents, dir) => {
 const baseCss = async (file) => {
   const contents = await readFile(path.join(baseLayer().stories, file), 'utf8');
   const dir = path.dirname(file);
-  return file.endsWith('/index.css') ? filterIndex(contents, dir) : contents;
+  return /\/(index|deps)\.css$/.test(file) ? filterIndex(contents, dir) : contents;
 };
 
 // Vendor CSS imports (`@import 'leaflet/dist/leaflet.css';`).
@@ -257,7 +260,10 @@ const writeCssSources = async (dest) => {
     return relative.startsWith('.') ? relative : `./${relative}`;
   };
   const rewrite = (contents, file) => {
-    let result = contents.replaceAll(config.stylesImport, relativeImport(file, path.join(baseDir, config.stylesBase)));
+    let result = contents.replaceAll(
+      config.stylesImport,
+      (match, quote, base) => `${quote}${relativeImport(file, path.join(baseDir, base))}${quote}`,
+    );
     for (const [name, vendor] of vendorCss) {
       result = result.replaceAll(vendor.css, relativeImport(file, path.join(dest, 'vendor', `${name}.css`)));
     }

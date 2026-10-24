@@ -1,0 +1,7 @@
+/*
+ * Dynamic levels (text-display-{{ level }}).
+ *
+ * What the component pulls in only when it is used (a theme imports this
+ * file for the components its templates include, see README).
+ */
+@source inline('text-display-{1,2,3,4,5,6}');
