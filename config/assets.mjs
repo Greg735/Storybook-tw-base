@@ -173,14 +173,8 @@ const collectTwig = async () => {
       [...config.twig.patterns, ...excludedPatterns(layer, config.twig.base)],
       [config.dist.twig],
       (contents) =>
-        setLibraryNamespace(
-          contents
-            .replaceAll('"../../', '"@components/')
-            .replaceAll("'../../", '"@components/')
-            .replaceAll('"../', '"@components/')
-            .replaceAll("'../", '"@components/')
-            .replaceAll(".twig'", '.twig"'),
-        ),
+        // Relative includes become "@components/…", keeping their quote.
+        setLibraryNamespace(contents.replace(/(["'])(?:\.\.\/){1,2}/g, '$1@components/')),
     ),
   );
   await warnExcludedIncludes();
