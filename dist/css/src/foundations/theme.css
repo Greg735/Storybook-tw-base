@@ -58,7 +58,7 @@
   --color-green: #0dff8e;
   --color-teal: #20c997;
   /* "cyan" is the light tint of the info color, as in storybook-base. */
-  --color-cyan: rgb(82.196% 92.627% 94.98%);
+  --color-cyan: var(--color-info-subtle);
 
   --color-primary: var(--color-blue);
   --color-secondary: var(--color-gray-600);
@@ -69,47 +69,54 @@
   --color-light: var(--color-gray-100);
   --color-dark: var(--color-gray-900);
 
-  /* Subtle backgrounds, subtle borders and emphasized text, per theme color. */
-  --color-primary-subtle: rgb(81.02% 88.627% 99.843%);
-  --color-secondary-subtle: rgb(88.471% 89.176% 89.804%);
-  --color-success-subtle: rgb(81.02% 100% 91.137%);
-  --color-info-subtle: rgb(82.196% 92.627% 94.98%);
-  --color-warning-subtle: rgb(100% 95.137% 80.549%);
-  --color-danger-subtle: rgb(97.255% 84.157% 85.412%);
-  --color-light-subtle: rgb(98.627% 98.824% 99.02%);
-  --color-dark-subtle: #ced4da;
+  /*
+   * Subtle backgrounds, subtle borders and emphasized text, per theme color,
+   * derived from it like Bootstrap's (tint 80%, tint 60%, shade 60%): a
+   * project that overrides --color-primary gets matching variants. light and
+   * dark use grays, as in Bootstrap.
+   */
+  --color-primary-subtle: color-mix(in srgb, var(--color-primary) 20%, white);
+  --color-secondary-subtle: color-mix(in srgb, var(--color-secondary) 20%, white);
+  --color-success-subtle: color-mix(in srgb, var(--color-success) 20%, white);
+  --color-info-subtle: color-mix(in srgb, var(--color-info) 20%, white);
+  --color-warning-subtle: color-mix(in srgb, var(--color-warning) 20%, white);
+  --color-danger-subtle: color-mix(in srgb, var(--color-danger) 20%, white);
+  --color-light-subtle: color-mix(in srgb, var(--color-light), white);
+  --color-dark-subtle: var(--color-gray-400);
 
-  --color-primary-border-subtle: rgb(62.039% 77.255% 99.686%);
-  --color-secondary-border-subtle: rgb(76.941% 78.353% 79.608%);
-  --color-success-border-subtle: rgb(62.039% 100% 82.275%);
-  --color-info-border-subtle: rgb(64.392% 85.255% 89.961%);
-  --color-warning-border-subtle: rgb(100% 90.275% 61.098%);
-  --color-danger-border-subtle: rgb(94.51% 68.314% 70.824%);
-  --color-light-border-subtle: #e9ecef;
-  --color-dark-border-subtle: #adb5bd;
+  --color-primary-border-subtle: color-mix(in srgb, var(--color-primary) 40%, white);
+  --color-secondary-border-subtle: color-mix(in srgb, var(--color-secondary) 40%, white);
+  --color-success-border-subtle: color-mix(in srgb, var(--color-success) 40%, white);
+  --color-info-border-subtle: color-mix(in srgb, var(--color-info) 40%, white);
+  --color-warning-border-subtle: color-mix(in srgb, var(--color-warning) 40%, white);
+  --color-danger-border-subtle: color-mix(in srgb, var(--color-danger) 40%, white);
+  --color-light-border-subtle: var(--color-gray-200);
+  --color-dark-border-subtle: var(--color-gray-500);
 
-  --color-primary-emphasis: rgb(2.039% 17.255% 39.686%);
-  --color-secondary-emphasis: rgb(16.941% 18.353% 19.608%);
-  --color-success-emphasis: rgb(2.039% 40% 22.275%);
-  --color-info-emphasis: rgb(4.392% 25.255% 29.961%);
-  --color-warning-emphasis: rgb(40% 30.275% 1.098%);
-  --color-danger-emphasis: rgb(34.51% 8.314% 10.824%);
-  --color-light-emphasis: #495057;
-  --color-dark-emphasis: #495057;
+  --color-primary-emphasis: color-mix(in srgb, var(--color-primary) 40%, black);
+  --color-secondary-emphasis: color-mix(in srgb, var(--color-secondary) 40%, black);
+  --color-success-emphasis: color-mix(in srgb, var(--color-success) 40%, black);
+  --color-info-emphasis: color-mix(in srgb, var(--color-info) 40%, black);
+  --color-warning-emphasis: color-mix(in srgb, var(--color-warning) 40%, black);
+  --color-danger-emphasis: color-mix(in srgb, var(--color-danger) 40%, black);
+  --color-light-emphasis: var(--color-gray-700);
+  --color-dark-emphasis: var(--color-gray-700);
 
   /* Body and UI colors. */
   --color-body: #212529;
   --color-body-bg: #fff;
-  --color-muted: rgb(33 37 41 / 0.75);
-  --color-tertiary: rgb(33 37 41 / 0.5);
+  --color-muted: color-mix(in srgb, var(--color-body) 75%, transparent);
+  --color-tertiary: color-mix(in srgb, var(--color-body) 50%, transparent);
   --color-secondary-bg: #e9ecef;
   --color-tertiary-bg: #f8f9fa;
   --color-border: #dee2e6;
   --color-border-translucent: rgb(0 0 0 / 0.175);
   --color-link: var(--color-primary);
-  --color-link-hover: rgb(4.078% 34.51% 79.373%);
+  --color-link-hover: color-mix(in srgb, var(--color-link) 80%, black);
   --color-code: #d63384;
-  --color-highlight-bg: rgb(100% 95.137% 80.549%);
+  --color-highlight-bg: var(--color-warning-subtle);
+  /* Border of a focused form control. */
+  --color-focus-border: color-mix(in srgb, var(--color-primary) 50%, white);
 
   /*
    * Readable text color on each background color (Bootstrap's
@@ -229,8 +236,10 @@
   --shadow-lg: 0 1rem 3rem rgb(0 0 0 / 0.175);
   --shadow-inset: inset 0 1px 2px rgb(0 0 0 / 0.075);
 
-  /* Focus ring (Bootstrap focus box-shadow). */
-  --focus-ring: 0 0 0 0.25rem rgb(13 110 253 / 0.25);
+  /* Focus ring (Bootstrap focus box-shadow), invalid and valid variants. */
+  --focus-ring: 0 0 0 0.25rem color-mix(in srgb, var(--color-primary) 25%, transparent);
+  --focus-ring-danger: 0 0 0 0.25rem color-mix(in srgb, var(--color-danger) 25%, transparent);
+  --focus-ring-success: 0 0 0 0.25rem color-mix(in srgb, var(--color-success) 25%, transparent);
 
   /* Animations. */
   --animate-wave: wave 40s cubic-bezier(0.55, 0.5, 0.45, 0.5) infinite;

@@ -103,7 +103,7 @@
     --color-yellow: #ffc107;
     --color-green: #0dff8e;
     --color-teal: #20c997;
-    --color-cyan: #d2ecf2;
+    --color-cyan: var(--color-info-subtle);
     --color-primary: var(--color-blue);
     --color-secondary: var(--color-gray-600);
     --color-success: var(--color-green);
@@ -113,40 +113,239 @@
     --color-light: var(--color-gray-100);
     --color-dark: var(--color-gray-900);
     --color-primary-subtle: #cfe2ff;
+  }
+
+  @supports (color: color-mix(in lab, red, red)) {
+    :root, :host {
+      --color-primary-subtle: color-mix(in srgb, var(--color-primary) 20%, white);
+    }
+  }
+
+  :root, :host {
     --color-secondary-subtle: #e2e3e5;
+  }
+
+  @supports (color: color-mix(in lab, red, red)) {
+    :root, :host {
+      --color-secondary-subtle: color-mix(in srgb, var(--color-secondary) 20%, white);
+    }
+  }
+
+  :root, :host {
     --color-success-subtle: #cfffe8;
+  }
+
+  @supports (color: color-mix(in lab, red, red)) {
+    :root, :host {
+      --color-success-subtle: color-mix(in srgb, var(--color-success) 20%, white);
+    }
+  }
+
+  :root, :host {
     --color-info-subtle: #d2ecf2;
+  }
+
+  @supports (color: color-mix(in lab, red, red)) {
+    :root, :host {
+      --color-info-subtle: color-mix(in srgb, var(--color-info) 20%, white);
+    }
+  }
+
+  :root, :host {
     --color-warning-subtle: #fff3cd;
+  }
+
+  @supports (color: color-mix(in lab, red, red)) {
+    :root, :host {
+      --color-warning-subtle: color-mix(in srgb, var(--color-warning) 20%, white);
+    }
+  }
+
+  :root, :host {
     --color-danger-subtle: #f8d7da;
-    --color-light-subtle: #fbfcfd;
-    --color-dark-subtle: #ced4da;
+  }
+
+  @supports (color: color-mix(in lab, red, red)) {
+    :root, :host {
+      --color-danger-subtle: color-mix(in srgb, var(--color-danger) 20%, white);
+    }
+  }
+
+  :root, :host {
+    --color-light-subtle: #fcfcfd;
+  }
+
+  @supports (color: color-mix(in lab, red, red)) {
+    :root, :host {
+      --color-light-subtle: color-mix(in srgb, var(--color-light), white);
+    }
+  }
+
+  :root, :host {
+    --color-dark-subtle: var(--color-gray-400);
     --color-primary-border-subtle: #9ec5fe;
+  }
+
+  @supports (color: color-mix(in lab, red, red)) {
+    :root, :host {
+      --color-primary-border-subtle: color-mix(in srgb, var(--color-primary) 40%, white);
+    }
+  }
+
+  :root, :host {
     --color-secondary-border-subtle: #c4c8cb;
+  }
+
+  @supports (color: color-mix(in lab, red, red)) {
+    :root, :host {
+      --color-secondary-border-subtle: color-mix(in srgb, var(--color-secondary) 40%, white);
+    }
+  }
+
+  :root, :host {
     --color-success-border-subtle: #9effd2;
+  }
+
+  @supports (color: color-mix(in lab, red, red)) {
+    :root, :host {
+      --color-success-border-subtle: color-mix(in srgb, var(--color-success) 40%, white);
+    }
+  }
+
+  :root, :host {
     --color-info-border-subtle: #a4d9e5;
+  }
+
+  @supports (color: color-mix(in lab, red, red)) {
+    :root, :host {
+      --color-info-border-subtle: color-mix(in srgb, var(--color-info) 40%, white);
+    }
+  }
+
+  :root, :host {
     --color-warning-border-subtle: #ffe69c;
+  }
+
+  @supports (color: color-mix(in lab, red, red)) {
+    :root, :host {
+      --color-warning-border-subtle: color-mix(in srgb, var(--color-warning) 40%, white);
+    }
+  }
+
+  :root, :host {
     --color-danger-border-subtle: #f1aeb5;
-    --color-light-border-subtle: #e9ecef;
-    --color-dark-border-subtle: #adb5bd;
+  }
+
+  @supports (color: color-mix(in lab, red, red)) {
+    :root, :host {
+      --color-danger-border-subtle: color-mix(in srgb, var(--color-danger) 40%, white);
+    }
+  }
+
+  :root, :host {
+    --color-light-border-subtle: var(--color-gray-200);
+    --color-dark-border-subtle: var(--color-gray-500);
     --color-primary-emphasis: #052c65;
+  }
+
+  @supports (color: color-mix(in lab, red, red)) {
+    :root, :host {
+      --color-primary-emphasis: color-mix(in srgb, var(--color-primary) 40%, black);
+    }
+  }
+
+  :root, :host {
     --color-secondary-emphasis: #2b2f32;
+  }
+
+  @supports (color: color-mix(in lab, red, red)) {
+    :root, :host {
+      --color-secondary-emphasis: color-mix(in srgb, var(--color-secondary) 40%, black);
+    }
+  }
+
+  :root, :host {
     --color-success-emphasis: #056639;
+  }
+
+  @supports (color: color-mix(in lab, red, red)) {
+    :root, :host {
+      --color-success-emphasis: color-mix(in srgb, var(--color-success) 40%, black);
+    }
+  }
+
+  :root, :host {
     --color-info-emphasis: #0b404c;
+  }
+
+  @supports (color: color-mix(in lab, red, red)) {
+    :root, :host {
+      --color-info-emphasis: color-mix(in srgb, var(--color-info) 40%, black);
+    }
+  }
+
+  :root, :host {
     --color-warning-emphasis: #664d03;
+  }
+
+  @supports (color: color-mix(in lab, red, red)) {
+    :root, :host {
+      --color-warning-emphasis: color-mix(in srgb, var(--color-warning) 40%, black);
+    }
+  }
+
+  :root, :host {
     --color-danger-emphasis: #58151c;
-    --color-light-emphasis: #495057;
-    --color-dark-emphasis: #495057;
+  }
+
+  @supports (color: color-mix(in lab, red, red)) {
+    :root, :host {
+      --color-danger-emphasis: color-mix(in srgb, var(--color-danger) 40%, black);
+    }
+  }
+
+  :root, :host {
+    --color-light-emphasis: var(--color-gray-700);
+    --color-dark-emphasis: var(--color-gray-700);
     --color-body: #212529;
     --color-body-bg: #fff;
     --color-muted: #212529bf;
+  }
+
+  @supports (color: color-mix(in lab, red, red)) {
+    :root, :host {
+      --color-muted: color-mix(in srgb, var(--color-body) 75%, transparent);
+    }
+  }
+
+  :root, :host {
     --color-secondary-bg: #e9ecef;
     --color-tertiary-bg: #f8f9fa;
     --color-border: #dee2e6;
     --color-border-translucent: #0000002d;
     --color-link: var(--color-primary);
     --color-link-hover: #0a58ca;
+  }
+
+  @supports (color: color-mix(in lab, red, red)) {
+    :root, :host {
+      --color-link-hover: color-mix(in srgb, var(--color-link) 80%, black);
+    }
+  }
+
+  :root, :host {
     --color-code: #d63384;
-    --color-highlight-bg: #fff3cd;
+    --color-highlight-bg: var(--color-warning-subtle);
+    --color-focus-border: #86b7fe;
+  }
+
+  @supports (color: color-mix(in lab, red, red)) {
+    :root, :host {
+      --color-focus-border: color-mix(in srgb, var(--color-primary) 50%, white);
+    }
+  }
+
+  :root, :host {
     --contrast-primary: #fff;
     --contrast-secondary: #fff;
     --contrast-success: #000;
@@ -233,7 +432,39 @@
     --radius-lg: .5rem;
     --radius-xl: 1rem;
     --focus-ring: 0 0 0 .25rem #0d6efd40;
+  }
+
+  @supports (color: color-mix(in lab, red, red)) {
+    :root, :host {
+      --focus-ring: 0 0 0 .25rem color-mix(in srgb, var(--color-primary) 25%, transparent);
+    }
+  }
+
+  :root, :host {
+    --focus-ring-danger: 0 0 0 .25rem #dc354540;
+  }
+
+  @supports (color: color-mix(in lab, red, red)) {
+    :root, :host {
+      --focus-ring-danger: 0 0 0 .25rem color-mix(in srgb, var(--color-danger) 25%, transparent);
+    }
+  }
+
+  :root, :host {
+    --focus-ring-success: 0 0 0 .25rem #0dff8e40;
+  }
+
+  @supports (color: color-mix(in lab, red, red)) {
+    :root, :host {
+      --focus-ring-success: 0 0 0 .25rem color-mix(in srgb, var(--color-success) 25%, transparent);
+    }
+  }
+
+  :root, :host {
     --animate-wave: wave 40s cubic-bezier(.55, .5, .45, .5) infinite;
+    --form-valid-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%230dff8e' d='M2.3 6.73.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1'/%3e%3c/svg%3e");
+    --form-invalid-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
+    --form-switch-focus-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgb%2852.549%25, 71.569%25, 99.608%25%29'/%3e%3c/svg%3e");
   }
 }
 
@@ -10826,20 +11057,29 @@
   .form-floating > label {
     z-index: 2;
     color: #212529a6;
+    max-width: 100%;
+    height: 100%;
+    padding: 1rem .75rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+  }
+
+  @supports (color: color-mix(in lab, red, red)) {
+    .form-floating > label {
+      color: color-mix(in srgb, var(--color-body) 65%, transparent);
+    }
+  }
+
+  .form-floating > label {
     text-align: start;
     text-overflow: ellipsis;
     white-space: nowrap;
     pointer-events: none;
     transform-origin: 0 0;
     border: 1px solid #0000;
-    max-width: 100%;
-    height: 100%;
-    padding: 1rem .75rem;
     transition: opacity .1s ease-in-out, transform .1s ease-in-out;
-    position: absolute;
-    top: 0;
-    left: 0;
-    overflow: hidden;
   }
 
   .form-floating > .form-control:focus ~ label, .form-floating > .form-control:not(:placeholder-shown) ~ label {
@@ -10881,8 +11121,8 @@
   .form-control:focus {
     color: var(--color-body);
     background-color: var(--color-body-bg);
+    border-color: var(--color-focus-border);
     box-shadow: var(--focus-ring);
-    border-color: #86b7fe;
     outline: 0;
   }
 
@@ -10931,7 +11171,7 @@
 
   .form-control.is-valid {
     border-color: var(--color-success);
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%230dff8e' d='M2.3 6.73.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1'/%3e%3c/svg%3e");
+    background-image: var(--form-valid-icon);
     background-position: right calc(.375em + .1875rem) center;
     background-repeat: no-repeat;
     background-size: calc(.75em + .375rem) calc(.75em + .375rem);
@@ -10940,12 +11180,12 @@
 
   .form-control.is-valid:focus {
     border-color: var(--color-success);
-    box-shadow: 0 0 0 .25rem #0dff8e40;
+    box-shadow: var(--focus-ring-success);
   }
 
   .form-control.error, .form-control.is-invalid, .form-control[aria-invalid="true"] {
     border-color: var(--color-danger);
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
+    background-image: var(--form-invalid-icon);
     background-position: right calc(.375em + .1875rem) center;
     background-repeat: no-repeat;
     background-size: calc(.75em + .375rem) calc(.75em + .375rem);
@@ -10958,7 +11198,7 @@
 
   .form-control:is(.error, .is-invalid, [aria-invalid="true"]):focus {
     border-color: var(--color-danger);
-    box-shadow: 0 0 0 .25rem #dc354540;
+    box-shadow: var(--focus-ring-danger);
   }
 
   .form-check-input {
@@ -10991,8 +11231,8 @@
   }
 
   .form-check-input:focus {
+    border-color: var(--color-focus-border);
     box-shadow: var(--focus-ring);
-    border-color: #86b7fe;
     outline: 0;
   }
 
@@ -11030,7 +11270,7 @@
   }
 
   .form-check-input:is(.error, [aria-invalid="true"]):focus {
-    box-shadow: 0 0 0 .25rem #dc354540;
+    box-shadow: var(--focus-ring-danger);
   }
 
   .form-check-input:is(.error, [aria-invalid="true"]) ~ label {
@@ -11105,6 +11345,12 @@
     border-color: var(--btn-hover-border-color, var(--btn-border-color, transparent));
     box-shadow: 0 0 0 .25rem var(--btn-focus-shadow, #0d6efd80);
     outline: 0;
+  }
+
+  @supports (color: color-mix(in lab, red, red)) {
+    .btn:focus-visible {
+      box-shadow: 0 0 0 .25rem var(--btn-focus-shadow, color-mix(in srgb, var(--color-primary) 50%, transparent));
+    }
   }
 
   .btn:active, .btn.active {
@@ -11502,7 +11748,13 @@
   }
 
   .form-range::-webkit-slider-thumb:active {
-    background-color: #b6d3fe;
+    background-color: #b6d4fe;
+  }
+
+  @supports (color: color-mix(in lab, red, red)) {
+    .form-range::-webkit-slider-thumb:active {
+      background-color: color-mix(in srgb, var(--color-primary) 30%, white);
+    }
   }
 
   .form-range::-webkit-slider-runnable-track {
@@ -11526,7 +11778,13 @@
   }
 
   .form-range::-moz-range-thumb:active {
-    background-color: #b6d3fe;
+    background-color: #b6d4fe;
+  }
+
+  @supports (color: color-mix(in lab, red, red)) {
+    .form-range::-moz-range-thumb:active {
+      background-color: color-mix(in srgb, var(--color-primary) 30%, white);
+    }
   }
 
   .form-range::-moz-range-track {
@@ -11645,7 +11903,7 @@
   }
 
   .form-switch .form-check-input:focus {
-    --form-check-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgb%2852.549%25, 71.569%25, 99.608%25%29'/%3e%3c/svg%3e");
+    --form-check-image: var(--form-switch-focus-icon);
   }
 
   .form-switch .form-check-input[type="checkbox"]:checked {
@@ -11683,8 +11941,8 @@
   }
 
   .form-select:focus {
+    border-color: var(--color-focus-border);
     box-shadow: var(--focus-ring);
-    border-color: #86b7fe;
     outline: 0;
   }
 
@@ -11703,7 +11961,7 @@
   }
 
   .form-select.error, .form-select[aria-invalid="true"] {
-    --form-select-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
+    --form-select-icon: var(--form-invalid-icon);
     border-color: var(--color-danger);
     background-position: right .75rem center, right 2.25rem center;
     background-size: 16px 12px, calc(.75em + .375rem) calc(.75em + .375rem);
@@ -11712,7 +11970,7 @@
 
   .form-select:is(.error, [aria-invalid="true"]):focus {
     border-color: var(--color-danger);
-    box-shadow: 0 0 0 .25rem #dc354540;
+    box-shadow: var(--focus-ring-danger);
   }
 
   .badge {
@@ -15909,7 +16167,7 @@
     --btn-active-color: var(--contrast-cyan);
     --btn-active-bg: var(--color-cyan);
     --btn-active-border-color: var(--color-cyan);
-    --btn-focus-shadow: #d2ecf280;
+    --btn-focus-shadow: color-mix(in srgb, color-mix(in srgb, var(--color-info) 20%, white) 50%, transparent);
   }
 
   @supports (color: color-mix(in lab, red, red)) {
