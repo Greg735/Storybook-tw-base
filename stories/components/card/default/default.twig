@@ -1,0 +1,32 @@
+{#
+ # Default card, built on card: optional image, title, text and button.
+ #
+ # Variables:
+ # - title: the card title.
+ # - text: the card text.
+ # - image: optional {src, alt}.
+ # - link: optional {url, label}, rendered as a button.
+ # - classes: additional classes.
+ # - card_attributes: HTML attributes of the card, {name: value}.
+ #}
+{% set card_content %}
+  {% if image.src %}
+    <img src="{{ image.src }}" class="w-full rounded-t-[calc(var(--radius-md)-1px)]" alt="{{ image.alt }}">
+  {% endif %}
+  <div class="flex-auto p-4">
+    {% if title %}
+      <h3 class="mb-2 text-h5">{{ title }}</h3>
+    {% endif %}
+    {% if text %}
+      <p class="last:mb-0">{{ text }}</p>
+    {% endif %}
+    {% if link.url %}
+      <a href="{{ link.url }}" class="btn btn-primary">{{ link.label }}</a>
+    {% endif %}
+  </div>
+{% endset %}
+{% include '@components/card/card.twig' with {
+  classes: ['relative', 'flex', 'min-w-0', 'flex-col', 'rounded-md', 'border', 'border-border-translucent', 'bg-body-bg', 'bg-clip-border', 'wrap-break-word', 'text-body']|merge(classes|default([])),
+  card_attributes: card_attributes,
+  content: card_content,
+} only %}

@@ -255,6 +255,10 @@ A component folder under `stories/components/<name>/` commonly contains:
 
 Only add the files that are needed. A `<name>.css` is registered in `stories/components/index.css` (one `@import './<name>/<name>.css';` line per component, so that the build can filter it). A `<name>.behaviors.js` gets a Drupal library of the same name, attached by the template.
 
+### Cards
+
+`card/card.twig` is the skeleton of the cards: only `classes` (array), `card_attributes` (`{name: value}`) and `content`, with no style of its own and no story. Each variant is a sub-folder `card/<variant>/` (`card/default`: image, title, text, button) that includes `@components/card/card.twig` and passes it its classes and content. A project adds its own variants the same way, and excludes the base ones it does not use (`"components/card/default"`).
+
 ### Drupal form components
 
 Form components live in `stories/components/form/`, with one sub-folder per Drupal core template (`form-element`, `form-element-label`, `input`, `textarea`, `select`, `fieldset`, `radios`, `checkboxes`). Each keeps **exactly the variables of that core template**, so a Drupal override is a single `{% include "@components/form/<name>/<name>.twig" %}`. Exception: `form-element` expects `type` and `name` already cleaned (`with { type: type|clean_class, name: name|clean_class }`); `form.helpers.js` cleans them with `cleanClass()` in the stories.

@@ -1,12 +1,18 @@
-import CardTemplate from '@components/card/card.twig';
-import CardSource from '@components/card/card.twig?raw';
+import CardDefaultTemplate from '@components/card/default/default.twig';
+import CardDefaultSource from '@components/card/default/default.twig?raw';
 
 export default {
-  title: 'Components/Card',
+  title: 'Components/Card/Default',
   parameters: {
     componentSource: {
-      code: CardSource,
+      code: CardDefaultSource,
       language: 'twig',
+    },
+    docs: {
+      description: {
+        component:
+          'Card with an optional image, a title, a text and a button. Built on `card`, the skeleton of the cards (`classes`, `card_attributes`, `content`).',
+      },
     },
   },
   argTypes: {
@@ -25,10 +31,14 @@ export default {
         type: { summary: 'array' },
       },
     },
+    card_attributes: {
+      control: 'object',
+      description: 'HTML attributes of the card',
+    },
   },
 };
 
-const Template = (args) => CardTemplate(args);
+const Template = (args) => CardDefaultTemplate(args);
 
 export const Default = Template.bind({});
 Default.args = {
