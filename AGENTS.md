@@ -122,6 +122,8 @@ ddev npm run format   # Prettier --write
 
 Prettier ignores `*.twig` and `*.md`. Use `parameters.docs.subtitle` in stories (not the removed `componentSubtitle`), and PascalCase story exports.
 
+When a component changes (Twig variables, markup, args, stories), update the page stories of the projects that use it (`stories/pages/**`) so they keep rendering correctly and reflect the change.
+
 ### Security audit
 
 ```bash

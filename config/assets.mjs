@@ -180,8 +180,9 @@ const collectTwig = async () => {
   await warnExcludedIncludes();
 };
 
-// Warns about distributed templates that include an excluded component: Drupal
-// would not find it in dist/components/.
+// Warns about distributed templates that include a template of an excluded
+// component missing from dist/components/ (the project may provide its own):
+// Drupal would not find it.
 const warnExcludedIncludes = async () => {
   const excluded = layers
     .flatMap((layer) => layer.exclude)
@@ -192,8 +193,11 @@ const warnExcludedIncludes = async () => {
   }
   for (const file of await glob('**/*.twig', { cwd: config.dist.twig })) {
     const contents = await readFile(path.join(config.dist.twig, file), 'utf8');
+    const missing = [...contents.matchAll(/@components\/([^"']+\.twig)/g)]
+      .map(([, include]) => include)
+      .filter((include) => !existsSync(path.join(config.dist.twig, include)));
     for (const dir of excluded) {
-      if (contents.includes(`@components/${dir}/`)) {
+      if (missing.some((include) => include.startsWith(`${dir}/`))) {
         console.warn(`  warning: ${file} includes the excluded component "${dir}"`);
       }
     }

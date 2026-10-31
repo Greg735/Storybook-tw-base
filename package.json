@@ -1,6 +1,6 @@
 {
   "name": "storybook-tw-base",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Twig + Tailwind CSS components for Drupal themes, with their Storybook. Install it in a project to reuse and override the components.",
   "type": "module",
   "exports": {
