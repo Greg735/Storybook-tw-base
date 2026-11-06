@@ -95,7 +95,7 @@
     "twig": "^3.0.0",
     "vite": "^8.3.4",
     "vite-plugin-twig-drupal": "^1.7.0",
-    "vitest": "^5.0.5"
+    "vitest": "^5.1.0"
   },
   "overrides": {
     "drupal-twig-extensions": "$drupal-twig-extensions"
